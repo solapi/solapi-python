@@ -11,7 +11,7 @@ api_key = [API KEY]
 api_secret = [API SECRET]
 
 [SERVER]
-domain = api.coolsms.co.kr
+domain = api.solapi.com
 protocol = https
 prefix =
 ```
