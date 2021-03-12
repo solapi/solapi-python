@@ -21,4 +21,5 @@ message_list.py             메시지 목록 조회
 group                       그룹발송 예제
 storage                     파일(이미지) 관리
 send_one                    단건 발송 예제
+all_in_one                  하나의 파일에 라이브러리 코드가 함께 들어있는 발송 예제
 ```
