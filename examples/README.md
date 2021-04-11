@@ -11,6 +11,11 @@ send_alimtalk.py            알림톡 발송 예제
 send_chingutalk.py          친구톡 발송 예제
 ```
 
+### 네이버톡톡 발송 예제
+```
+send_naver.py               네이버톡톡 예제
+```
+
 ### 메시지 조회
 ```
 message_list.py             메시지 목록 조회
