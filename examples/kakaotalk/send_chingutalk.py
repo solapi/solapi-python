@@ -1,6 +1,6 @@
 import json
 import sys
-sys.path.append('../lib')
+sys.path.append('../../lib')
 import message
 
 # 한번 요청으로 1만건의 친구톡 발송이 가능합니다.
@@ -14,7 +14,8 @@ if __name__ == '__main__':
         'from': '029302266',
         'text': '카카오톡채널 친구로 추가되어 있어야 친구톡 발송이 가능합니다.',
         'kakaoOptions': {
-          'pfId': 'KA01PF200323182344986oTFz9CIabcx'
+          'pfId': 'KA01PF200323182344986oTFz9CIabcx',
+          'adFlag': True # 광고 표기 여부(기본값 False)
         }
       },
       {
@@ -51,6 +52,14 @@ if __name__ == '__main__':
             {
               'buttonType': 'MD', # 상담요청하기 (상담요청하기 버튼을 누르면 메시지 내용이 상담원에게 그대로 전달됩니다.)
               'buttonName': '상담요청하기'
+            },
+            {
+              'buttonType': 'BC', #  상담톡 서비스 사용 시에만 가능합니다.
+              'buttonName': '상담요청하기'
+            },
+            {
+              'buttonType': 'BT', #  챗봇 사용 시 가능
+              'buttonName': '챗본 문의'
             }
           ]
         }

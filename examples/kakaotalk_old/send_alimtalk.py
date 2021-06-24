@@ -1,7 +1,7 @@
 import json
 import sys
 
-sys.path.append('../lib')
+sys.path.append('../../lib')
 
 import message
 

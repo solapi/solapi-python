@@ -2,13 +2,13 @@ import requests
 import json
 import sys
 import os.path
-sys.path.append('../lib')
+sys.path.append('../../lib')
 import message
 import storage
 
 # 한번 요청으로 1만건의 메시지 발송이 가능합니다.
 if __name__ == '__main__':
-  res = storage.uploadImage('./testImage.jpg').json()
+  res = storage.uploadImage('../testImage.jpg').json()
   fileId = res['fileId']
   data = {
     'messages': [
