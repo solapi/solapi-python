@@ -1,6 +1,6 @@
 import json
 import sys
-sys.path.append('../lib')
+sys.path.append('../../lib')
 import message
 
 # 한번 요청으로 1만건의 메시지 발송이 가능합니다.

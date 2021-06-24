@@ -82,36 +82,17 @@ if __name__ == '__main__':
       {
         'to': '01000000004',
         'from': '029302266',
-        'text': '버튼은 최대 5개까지 추가 가능하며 템플릿 내용과 마찬가지로 버튼 내용도 등록 및 검수 받은 내용 그대로 입력되어야 합니다.',
         'kakaoOptions': {
           'pfId': 'KA01PF200323182344986oTFz9CIabcx',
           'templateId': 'KA01TP200323182345741y9yF20aabcx',
-          'buttons': [
-            {
-              'buttonType': 'WL', # 웹링크
-              'buttonName': '버튼 이름',
-              'linkMo': 'https://m.example.com',
-              'linkPc': 'https://example.com'     # 템플릿 등록 시 모바일링크만 입력하였다면 linkPc 값은 입력하시면 안됩니다.
-            },
-            {
-              'buttonType': 'AL', # 앱링크
-              'buttonName': '실행 버튼',
-              'linkAnd': 'examplescheme://',  # 안드로이드
-              'linkIos': 'examplescheme://'   # iOS
-            },
-            {
-              'buttonType': 'DS', # 배송조회
-              'buttonName': '배송 조회'
-            },
-            {
-              'buttonType': 'BK', # 봇키워드(챗봇에게 키워드를 전달합니다. 버튼이름의 키워드가 그대로 전달됩니다.)
-              'buttonName': '봇키워드'
-            },
-            {
-              'buttonType': 'MD', # 상담요청하기 (상담요청하기 버튼을 누르면 메시지 내용이 상담원에게 그대로 전달됩니다.)
-              'buttonName': '상담요청하기'
-            }
-          ]
+          # 변수: 값 형식으로 모든 변수에 대한 변수값 입력
+          'variables': {
+            '#{변수1}': '변수1의 값',
+            '#{변수2}': '변수2의 값',
+            '#{버튼링크1}': '버튼링크1의 값',
+            '#{버튼링크2}': '버튼링크2의 값',
+            '#{강조문구}': '강조문구의 값'
+          }
         }
       }
       # ...
