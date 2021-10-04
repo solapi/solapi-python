@@ -3,6 +3,7 @@
 sms/send_sms.py                 SMS 발송 예제(해외 발송 포함)
 sms/send_lms.py                 LMS 발송 예제
 sms/send_mms.py                 MMS 발송 예제
+sms/allow_duplicates.py         수신번호 중복 허용 예제
 rcs/send_rcs_sms.py             RCS SMS 발송 예제(버튼 포함)
 rcs/send_rcs_lms.py             RCS LMS 발송 에제(버튼 포함)
 ```
