@@ -1,34 +1,37 @@
 import requests
 import base64
-import config
-import auth
+import lib.config as config
+import lib.auth as auth
 
-def uploadImage(path):
+
+def upload_image(path):
     with open(path, "rb") as image_file:
         encoded_string = base64.b64encode(image_file.read())
     data = {
         'file': str(encoded_string)[2:-1],
         'type': 'MMS'
     }
-    headers = auth.get_headers(config.apiKey, config.apiSecret)
-    return requests.post(config.getUrl('/storage/v1/files'), headers=headers, json=data)
+    headers = auth.get_headers(config.api_key, config.api_secret)
+    return requests.post(config.get_url('/storage/v1/files'), headers=headers, json=data)
 
-def uploadRCSImage(path):
+
+def upload_rcs_image(path):
     with open(path, "rb") as image_file:
         encoded_string = base64.b64encode(image_file.read())
     data = {
         'file': str(encoded_string)[2:-1],
         'type': 'RCS'
     }
-    headers = auth.get_headers(config.apiKey, config.apiSecret)
-    return requests.post(config.getUrl('/storage/v1/files'), headers=headers, json=data)
+    headers = auth.get_headers(config.api_key, config.api_secret)
+    return requests.post(config.get_url('/storage/v1/files'), headers=headers, json=data)
 
-def uploadKakaoImage(path):
+
+def upload_kakao_image(path):
     with open(path, "rb") as image_file:
         encoded_string = base64.b64encode(image_file.read())
     data = {
         'file': str(encoded_string)[2:-1],
         'type': 'KAKAO'
     }
-    headers = auth.get_headers(config.apiKey, config.apiSecret)
-    return requests.post(config.getUrl('/storage/v1/files'), headers=headers, json=data)
+    headers = auth.get_headers(config.api_key, config.api_secret)
+    return requests.post(config.get_url('/storage/v1/files'), headers=headers, json=data)

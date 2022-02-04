@@ -1,10 +1,6 @@
-import requests
 import json
-import sys
-import os.path
-sys.path.append('../../lib')
-import message
-import storage
+import lib.message as message
+import lib.storage as storage
 
 # 한번 요청으로 1만건의 메시지 발송이 가능합니다.
 if __name__ == '__main__':

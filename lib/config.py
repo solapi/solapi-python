@@ -1,19 +1,20 @@
 import os
 import configparser
 
-libdir = os.path.dirname(__file__)
+lib_dir = os.path.dirname(__file__)
+env_config = configparser.ConfigParser()
+env_config.read(lib_dir + '/config.ini')
 
-config = configparser.ConfigParser()
-config.read(libdir + '/config.ini')
-apiKey = config['AUTH']['api_key']
-apiSecret = config['AUTH']['api_secret']
-protocol = config['SERVER']['protocol']
-domain = config['SERVER']['domain']
-prefix = config['SERVER']['prefix'] and config['SERVER']['prefix'] or ''
+api_key = env_config['AUTH']['api_key']
+api_secret = env_config['AUTH']['api_secret']
+protocol = env_config['SERVER']['protocol']
+domain = env_config['SERVER']['domain']
+prefix = env_config['SERVER']['prefix'] and env_config['SERVER']['prefix'] or ''
 
-def getUrl(path):
-  url = '%s://%s' % (protocol, domain)
-  if prefix != '':
-    url = url + prefix
-  url = url + path
-  return url
+
+def get_url(path):
+    url = '%s://%s' % (protocol, domain)
+    if prefix != '':
+        url = url + prefix
+    url = url + path
+    return url

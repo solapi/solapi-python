@@ -15,16 +15,16 @@ def get_iso_datetime():
     return datetime.datetime.now().replace(tzinfo=datetime.timezone(offset=utc_offset)).isoformat()
 
 
-def get_signature(key, msg):
+def get_signature(key='', msg=''):
     return hmac.new(key.encode(), msg.encode(), hashlib.sha256).hexdigest()
 
 
-def get_headers(apiKey, apiSecret):
+def get_headers(api_key='', api_secret_key=''):
     date = get_iso_datetime()
     salt = unique_id()
     data = date + salt
     return {
-      'Authorization': 'HMAC-SHA256 ApiKey=' + apiKey + ', Date=' + date + ', salt=' + salt + ', signature=' +
-                             get_signature(apiSecret, data),
-      'Content-Type': 'application/json; charset=utf-8'
+        'Authorization': 'HMAC-SHA256 ApiKey=' + api_key + ', Date=' + date + ', salt=' + salt + ', signature=' +
+                         get_signature(api_secret_key, data),
+        'Content-Type': 'application/json; charset=utf-8'
     }

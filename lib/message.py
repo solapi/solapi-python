@@ -1,23 +1,48 @@
 import requests
-import config
-import auth
+import platform
+import lib.auth as auth
+import lib.config as config
 
-def sendMany(data):
-  return requests.post(config.getUrl('/messages/v4/send-many'), headers=auth.get_headers(config.apiKey, config.apiSecret), json=data)
+default_agent = {
+    'sdkVersion': 'python/4.1.2',
+    'osPlatform': platform.platform() + " | " + platform.python_version()
+}
 
-def sendOne(data):
-  return requests.post(config.getUrl('/messages/v4/send'), headers=auth.get_headers(config.apiKey, config.apiSecret), json=data)
+
+def send_many(data):
+    data['agent'] = default_agent
+    return requests.post(config.get_url('/messages/v4/send-many'),
+                         headers=auth.get_headers(config.api_key, config.api_secret), json=data)
+
+
+def send_one(data):
+    data['agent'] = default_agent
+    return requests.post(config.get_url('/messages/v4/send'),
+                         headers=auth.get_headers(config.api_key, config.api_secret),
+                         json=data)
+
 
 def post(path, data):
-  return requests.post(config.getUrl(path), headers=auth.get_headers(config.apiKey, config.apiSecret), json=data)
+    return requests.post(config.get_url(path), headers=auth.get_headers(config.api_key, config.api_secret), json=data)
 
-def put(path, data, headers = {}):
-  headers.update(auth.get_headers(config.apiKey, config.apiSecret))
-  return requests.put(config.getUrl(path), headers=headers, json=data)
 
-def get(path, headers = {}):
-  headers.update(auth.get_headers(config.apiKey, config.apiSecret))
-  return requests.get(config.getUrl(path), headers=headers)
+def put(path, data, headers=None):
+    if headers is None:
+        headers = {}
+    headers.update(auth.get_headers(config.api_key, config.api_secret))
+    return requests.put(config.get_url(path), headers=headers, json=data)
 
-def delete(path):
-  return requests.delete(config.getUrl(path), headers=auth.get_headers(config.apiKey, config.apiSecret))
+
+def get(path, headers=None):
+    if headers is None:
+        headers = {}
+    headers.update(auth.get_headers(config.api_key, config.api_secret))
+    return requests.get(config.get_url(path), headers=headers)
+
+
+def delete(path, data):
+    if data is None:
+        return requests.delete(config.get_url(path), headers=auth.get_headers(config.api_key, config.api_secret))
+    else:
+        return requests.delete(config.get_url(path), headers=auth.get_headers(config.api_key, config.api_secret),
+                               json=data)
