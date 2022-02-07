@@ -1,6 +1,6 @@
 # Solapi SDK for Python
 
-[![Python 3.10](https://img.shields.io/badge/python-3.10-blue.svg)](https://www.python.org/downloads/release/python-370/)
+[![Python 3.10](https://img.shields.io/badge/python-3.10-blue.svg)](https://www.python.org/downloads/release/python-3102/)
 
 lib/config.ini 파일을 아래와 같이 설정 후 examples 아래 예제 코드를 실행해 보세요.
 
