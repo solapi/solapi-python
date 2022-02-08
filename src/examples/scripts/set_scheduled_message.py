@@ -5,6 +5,7 @@ import uuid
 import hmac
 import hashlib
 import requests
+import platform
 
 # 아래 값은 필요시 수정
 protocol = 'https'
@@ -71,7 +72,10 @@ def delete(url):
 '''
 if __name__ == '__main__':
     # STEP 1 그룹 추가
-    addGroupResponse = post('/messages/v4/groups', parameter={})
+    addGroupResponse = post('/messages/v4/groups', parameter={
+        'sdkVersion': 'python/4.2.0',
+        'osPlatform': platform.platform() + " | " + platform.python_version()
+    })
     groupResponse: dict = addGroupResponse.json()
     groupId = groupResponse['groupId']
 
