@@ -5,12 +5,15 @@ import uuid
 import hmac
 import hashlib
 import requests
-import platform
 
 # 아래 값은 필요시 수정
 protocol = 'https'
 domain = 'api.solapi.com'
 prefix = ''
+
+# 반드시 관리 콘솔 내 발급 받으신 API KEY, API SECRET KEY를 입력해주세요
+api_key = 'INPUT YOUR API KEY'
+api_secret = 'INPUT YOUR SECRET KEY'
 
 
 def unique_id():
@@ -47,25 +50,33 @@ def get_url(path):
     return url
 
 
-def send_many(parameter):
-    # 반드시 관리 콘솔 내 발급 받으신 API KEY, API SECRET KEY를 입력해주세요
-    api_key = 'INPUT YOUR API KEY'
-    api_secret = 'INPUT YOUR SECRET KEY'
-    parameter['agent'] = {
-        'sdkVersion': 'python/4.2.0',
-        'osPlatform': platform.platform() + " | " + platform.python_version()
-    }
+def get(url):
+    return requests.get(get_url(url), headers=get_headers(api_key, api_secret))
 
-    return requests.post(get_url('/messages/v4/send-many'), headers=get_headers(api_key, api_secret), json=parameter)
+
+def post(url, parameter):
+    return requests.post(get_url(url), headers=get_headers(api_key, api_secret), json=parameter)
+
+
+def put(url, parameter):
+    return requests.put(get_url(url), headers=get_headers(api_key, api_secret), json=parameter)
+
+
+def delete(url):
+    return requests.delete(get_url(url), headers=get_headers(api_key, api_secret))
 
 
 '''
-한번 요청으로 1만건의 메시지 발송이 가능합니다.
-해당 파일을 통해 별도 import 없이 발송 테스트가 가능합니다.
-from 데이터의 경우 반드시 관리 콘솔 내 등록하신 발신번호를 넣으셔야 정상 발송 가능합니다. 
+예약발송 예제
 '''
 if __name__ == '__main__':
-    data = {
+    # STEP 1 그룹 추가
+    addGroupResponse = post('/messages/v4/groups', parameter={})
+    groupResponse: dict = addGroupResponse.json()
+    groupId = groupResponse['groupId']
+
+    # STEP 2 발송할 메시지 데이터 추가
+    messagesDict = {
         'messages': [
             {
                 'to': '01000000001',
@@ -116,5 +127,21 @@ if __name__ == '__main__':
             # 1만건까지 추가 가능
         ]
     }
-    res = send_many(data)
-    print(json.dumps(res.json(), indent=2, ensure_ascii=False))
+    put('/messages/v4/groups/%s/messages' % groupId, parameter=messagesDict)
+
+    # STEP 3 예약 발송일 등록
+    utc_offset_sec = time.altzone if time.localtime().tm_isdst else time.timezone
+    utc_offset = datetime.timedelta(seconds=-utc_offset_sec)
+
+    # 희망하시는 예약 날짜를 넣어주세요 년
+    # datetime(년, 월, 일, 시, 분, 초)
+    scheduledDate = datetime.datetime(2022, 2, 8, 15, 0, 0).replace(
+        tzinfo=datetime.timezone(offset=utc_offset)).isoformat()
+    scheduledDateDict = {
+        'scheduledDate': scheduledDate
+    }
+    setScheduledGroupResponse = post('/messages/v4/groups/%s/schedule' % groupId, parameter=scheduledDateDict)
+    print(json.dumps(json.loads(setScheduledGroupResponse.text), indent=2, ensure_ascii=False))
+
+    # 예약 발송 취소를 희망하실 경우 아래 코드를 추가해주세요.
+    # delete('/messages/v4/groups/%s/schedule' % groupId)
