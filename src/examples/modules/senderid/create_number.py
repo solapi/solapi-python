@@ -1,5 +1,5 @@
 import json
-from src import lib as message
+from src.lib import message
 
 '''
 STEP 1) 발신번호 추가 예제

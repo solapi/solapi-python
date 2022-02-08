@@ -1,12 +1,11 @@
 import json
-import sys
+from src.lib import message
 
-sys.path.append('../../../lib')
-import message
-
-# 한번 요청으로 1만건의 친구톡 발송이 가능합니다.
-# 카카오톡채널 친구로 추가되어 있어야 친구톡 발송이 가능합니다.
-# 템플릿 등록없이 버튼을 포함하여 자유롭게 메시지 전송이 가능합니다.
+'''
+한번 요청으로 1만건의 친구톡 발송이 가능합니다.
+카카오톡채널 친구로 추가되어 있어야 친구톡 발송이 가능합니다.
+템플릿 등록없이 버튼을 포함하여 자유롭게 메시지 전송이 가능합니다.
+'''
 if __name__ == '__main__':
     data = {
         'messages': [
@@ -69,5 +68,5 @@ if __name__ == '__main__':
             # 1만건까지 추가 가능
         ]
     }
-    res = message.sendMany(data)
+    res = message.send_many(data)
     print(json.dumps(res.json(), indent=2, ensure_ascii=False))

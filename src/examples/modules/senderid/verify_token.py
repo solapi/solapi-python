@@ -1,5 +1,5 @@
 import json
-from src import lib as message
+from src.lib import message
 
 '''
 Step 3) 인증번호 확인

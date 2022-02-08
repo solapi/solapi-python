@@ -1,6 +1,6 @@
 import requests
 import json
-from src import lib as auth, lib as config
+from src.lib import config, auth
 
 '''
 모든 메시지를 조회하는 예제
@@ -55,6 +55,3 @@ if __name__ == '__main__':
         page2 = requests.get(config.get_url('/messages/v4/list?limit=5&startKey=%s' % startKey),
                              headers=auth.get_headers(config.api_key, config.api_secret)).json()
         print(json.dumps(page2, indent=2, ensure_ascii=False))
-    # 페이지 처리
-    page1 = requests.get(config.get_url('/messages/v4/list?limit=5'),
-                         headers=auth.get_headers(config.api_key, config.api_secret)).json()

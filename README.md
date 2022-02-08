@@ -9,5 +9,6 @@
 - configparser
 
 ### 예제 유형 별 참고사항
+
 - 일반적인 사용예제는 examples/modules 폴더를 참고 해주세요.
-- script 파일로서 한 파일 안에서 구동되는 예제는 examples/scripts 폴더를 참고해주세요.
+- python 인터프리터를 통해 한 파일 안에서 구동되는 예제들은 examples/scripts 폴더를 참고해주세요.

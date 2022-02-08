@@ -1,5 +1,5 @@
 import json
-from src import lib as message
+from src.lib import message
 
 if __name__ == '__main__':
     # [INPUT_GROUP_ID] 에 그룹 아이디를 넣어주세요

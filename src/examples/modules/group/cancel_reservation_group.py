@@ -1,5 +1,5 @@
 import json
-from src import lib as message
+from src.lib import message
 
 '''
 예약 발송 취소 예제, 이미 예약 발송이 설정되어 있어야 합니다. 

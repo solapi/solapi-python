@@ -1,5 +1,5 @@
 import json
-from src import lib as message
+from src.lib import message
 
 '''
 활성화 된 발신번호 목록을 조회하는 예제

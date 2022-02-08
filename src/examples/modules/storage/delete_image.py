@@ -1,6 +1,6 @@
 import requests
 import json
-from src import lib as auth, lib as config
+from src.lib import auth, config
 
 '''
 이미지 파일 삭제 예제

@@ -1,6 +1,6 @@
 import requests
 import json
-from src import lib as auth, lib as config
+from src.lib import auth, config
 
 '''
 이미지 파일 단 건 조회 예제

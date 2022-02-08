@@ -1,5 +1,5 @@
 import json
-from src import lib as message
+from src.lib import message
 
 # 한번 요청으로 1만건의 메시지 발송이 가능합니다.
 if __name__ == '__main__':

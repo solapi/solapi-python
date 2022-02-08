@@ -1,6 +1,9 @@
 import json
-from src import lib as message
+from src.lib import message
 
+'''
+사진 문자 그룹 추가 예제
+'''
 if __name__ == '__main__':
     # [GROUP_ID] 에 그룹 아이디를 넣어주세요
     # ex) G4V20181005122748TESTTESTTESTTES

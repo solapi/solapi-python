@@ -1,5 +1,5 @@
 import json
-from src import lib as message
+from src.lib import message
 
 if __name__ == '__main__':
     res = message.get('/messages/v4/groups')
