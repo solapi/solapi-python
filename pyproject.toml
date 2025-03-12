@@ -1,0 +1,22 @@
+[project]
+name = "solapi"
+version = "5.0.0"
+description = "SOLAPI SDK for Python"
+authors = [
+    { name = "SOLAPI Team", email = "contact@solapi.com" }
+]
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "requests (>=2.32.3,<3.0.0)"
+]
+
+[tool.poetry]
+packages = [{ include = "solapi", from = "src" }]
+
+[tool.poetry.group.dev.dependencies]
+ruff = "^0.9.10"
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
