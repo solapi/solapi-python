@@ -1,6 +1,5 @@
 import re
 from datetime import datetime
-from typing import Union
 
 
 class InvalidDateError(Exception):
@@ -61,7 +60,7 @@ def parse_iso(date_string: str) -> datetime:
         raise InvalidDateError("Invalid Date") from e
 
 
-def string_date_transfer(value: Union[str, datetime]) -> datetime:
+def string_date_transfer(value: str | datetime) -> datetime:
     """
     일반 문자열 날짜가 있을 경우 datetime 타입으로 변환해주는 함수
 
@@ -83,7 +82,7 @@ def string_date_transfer(value: Union[str, datetime]) -> datetime:
     return value
 
 
-def transfer(value: Union[str, datetime]) -> str:
+def format_with_transfer(value: str | datetime) -> str:
     """
     string_date_transfer와 format_iso를 한번에 실행하는 함수
 
