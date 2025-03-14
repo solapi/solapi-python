@@ -1,7 +1,7 @@
 import platform
 from typing import Any, TypedDict, Union
 
-from solapi.model.message import MessageType
+from solapi.model.message import Message, MessageType
 
 
 class MessageParameterRequired(TypedDict):
@@ -76,4 +76,4 @@ class ShowMessageListType(TypedDict, total=False):
 class MultipleDetailMessageSendingRequest(
     TypedDict, DefaultMessageRequest, AppId, ShowMessageListType
 ):
-    messages: list[MessageParameter]
+    messages: list[Message]

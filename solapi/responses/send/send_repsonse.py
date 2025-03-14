@@ -18,7 +18,7 @@ class FailedMessage(BaseModel):
     custom_fields: Optional[dict[str, str]] = Field(None, alias="customFields")
 
     class Config:
-        allow_population_by_field_name = True
+        populate_by_name = True
 
 
 class MessageResponseItem(BaseModel):
@@ -28,7 +28,7 @@ class MessageResponseItem(BaseModel):
     status_message: str = Field(..., alias="statusMessage")
 
     class Config:
-        allow_population_by_field_name = True
+        populate_by_name = True
 
 
 class DetailGroupMessageResponse(BaseModel):
@@ -37,4 +37,4 @@ class DetailGroupMessageResponse(BaseModel):
     message_list: Optional[list[MessageResponseItem]] = Field(None, alias="messageList")
 
     class Config:
-        allow_population_by_field_name = True
+        populate_by_name = True

@@ -3,9 +3,9 @@ from typing import Optional
 from solapi.lib.authenticator import AuthenticationParameter
 from solapi.lib.fetcher import RequestMethod, default_fetcher
 from solapi.lib.string_date_transfer import format_with_transfer
+from solapi.model.message import Message
 from solapi.requests.request_confiog import SendRequestConfig
 from solapi.requests.send.send_request import (
-    MessageParameter,
     MultipleDetailMessageSendingRequest,
 )
 from solapi.responses.send.send_repsonse import DetailGroupMessageResponse
@@ -22,7 +22,7 @@ class SolapiMessageService:
     # TODO: Request도 pydantic 모델로 진행
     async def send(
         self,
-        messages: list[MessageParameter] | MessageParameter,
+        messages: list[Message] | Message,
         request_config: Optional[SendRequestConfig] = None,
     ):
         payload = []

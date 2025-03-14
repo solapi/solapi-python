@@ -1,7 +1,8 @@
+from datetime import datetime
 from enum import Enum
 from typing import Any, Optional, TypedDict, Union
 
-from solapi.requests.send.send_request import MessageParameter
+from pydantic import BaseModel, Field
 
 
 # 외부 파일 import 대신 타입 정의
@@ -57,80 +58,28 @@ class MessageType(str, Enum):
 
 
 # TODO: 생성자 만들 때 Request 딕셔너리가 아니라 Response 딕셔너리로 받아와야함.
-class Message:
-    def __init__(self, parameter: MessageParameter):
-        """
-        Message 클래스 초기화
+class Message(BaseModel):
+    _to: str
+    from__: Optional[str] = Field(None, alias="from")
+    _text: Optional[str] = None
+    _date_created: Optional[datetime] = None
+    _date_updated: Optional[datetime] = None
+    _group_id: Optional[str] = None
+    _message_id: Optional[str] = None
+    _image_id: Optional[str] = None
+    _log: Optional[str] = None
+    _type: Optional[str] = None
+    _subject: Optional[str] = None
+    # TODO: kakao options, rcs options 타이핑 해야 함
+    _kakao_options: Optional[dict[str, Any]] = None
+    _rcs_options: Optional[dict[str, Any]] = None
+    _country: Optional[str] = None
+    _auto_type_detect: Optional[bool] = None
+    _status_code: Optional[str] = None
+    _replacements: Optional[dict[str, Any]] = None
+    _custom_fields: Optional[dict[str, Any]] = None
+    _fax_options: Optional[dict[str, Any]] = None
 
-        Args:
-            parameter: 메시지 파라미터 딕셔너리(json)
-        """
-        # 수신번호
-        self._to: Union[str, list[str]] = parameter["to"]
-
-        # 발신번호
-        self._from_: Optional[str] = getattr(parameter, "from", None)
-
-        # 메시지 내용
-        self._text: Optional[str] = getattr(parameter, "text", None)
-
-        # 메시지 생성일자
-        self._date_created: Optional[str] = getattr(parameter, "dateCreated", None)
-
-        # 메시지 수정일자
-        self._date_updated: Optional[str] = getattr(parameter, "dateUpdated", None)
-
-        # 메시지의 그룹 ID
-        self._group_id: Optional[str] = getattr(parameter, "groupId", None)
-
-        # 해당 메시지의 ID
-        self._message_id: Optional[str] = getattr(parameter, "messageId", None)
-
-        # MMS 전용 스토리지(이미지) ID
-        self._image_id: Optional[str] = getattr(parameter, "imageId", None)
-
-        # 메시지 유형
-        self._type: Optional[MessageType] = getattr(parameter, "type", None)
-
-        # 문자 제목(LMS, MMS 전용)
-        self._subject: Optional[str] = getattr(parameter, "subject", None)
-
-        # 메시지 타입 감지 여부(비활성화 시 반드시 타입이 명시 되어야 함)
-        self._auto_type_detect: Optional[bool] = getattr(
-            parameter, "autoTypeDetect", None
-        )
-
-        # 카카오 알림톡/친구톡을 위한 프로퍼티
-        self._kakao_options: Optional[KakaoOption] = getattr(
-            parameter, "kakaoOptions", None
-        )
-
-        # RCS 메시지를 위한 프로퍼티
-        self._rcs_options: Optional[RcsOption] = getattr(parameter, "rcsOptions", None)
-
-        # 해외 문자 발송을 위한 국가번호(예) "82", "1" 등)
-        self._country: Optional[str] = getattr(parameter, "country", None)
-
-        # 메시지 로그
-        self._log: Optional[list[dict[str, Any]]] = getattr(parameter, "log", None)
-
-        # 대체 텍스트
-        self._replacements: Optional[list[dict[str, Any]]] = getattr(
-            parameter, "replacements", None
-        )
-
-        # 메시지 상태 코드
-        # https://developers.solapi.com/references/message-status-codes
-        self._status_code: Optional[str] = getattr(parameter, "status", None)
-
-        # 사용자를 위한 사용자만의 커스텀 값을 입력할 수 있는 필드
-        # 단, 오브젝트 내 키 값 모두 문자열 형태로 입력되어야 합니다.
-        self._custom_fields: Optional[dict[str, str]] = getattr(
-            parameter, "customFields", None
-        )
-
-        # 팩스 옵션
-        self._fax_options: Optional[FileIds] = getattr(parameter, "faxOptions", None)
 
     @property
     def to(self) -> Union[str, list[str]]:
@@ -142,11 +91,11 @@ class Message:
 
     @property
     def from_(self) -> Optional[str]:
-        return self._from_
+        return self.__dict__.get("from")
 
     @from_.setter
     def from_(self, value: Optional[str]) -> None:
-        self._from_ = value
+        self.from__ = value
 
     @property
     def text(self) -> Optional[str]:
@@ -283,3 +232,6 @@ class Message:
     @fax_options.setter
     def fax_options(self, value: Optional[FileIds]) -> None:
         self._fax_options = value
+
+    class Config:
+        populate_by_name = True

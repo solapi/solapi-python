@@ -2,8 +2,6 @@ from typing import Any, Optional
 
 from pydantic import BaseModel, Field
 
-from solapi.message_service import SolapiMessageService
-
 
 class GroupMessageResponse(BaseModel):
     count: Any = Field(..., alias="count")
@@ -27,7 +25,7 @@ class GroupMessageResponse(BaseModel):
     date_completed: Optional[str] = Field(None, alias="dateCompleted")
 
     class Config:
-        allow_population_by_field_name = True
+        populate_by_name = True
 
 class Count(BaseModel):
     total: int = Field(..., alias="total")
@@ -41,7 +39,4 @@ class Count(BaseModel):
     registered_success: int = Field(..., alias="registeredSuccess")
 
     class Config:
-        allow_population_by_field_name = True
-
-
-message_service = SolapiMessageService()
+        populate_by_name = True
