@@ -1,14 +1,13 @@
-from typing import Optional
+from typing import Optional, Union
 
 from solapi.lib.authenticator import AuthenticationParameter
 from solapi.lib.fetcher import RequestMethod, default_fetcher
 from solapi.lib.string_date_transfer import format_with_transfer
 from solapi.model.message import Message
-from solapi.requests.request_confiog import SendRequestConfig
-from solapi.requests.send.send_request import (
-    MultipleDetailMessageSendingRequest,
+from solapi.model.request.send_message_request import (
+    SendMessageRequest,
+    SendRequestConfig,
 )
-from solapi.responses.send.send_repsonse import DetailGroupMessageResponse
 
 
 class SolapiMessageService:
@@ -19,48 +18,31 @@ class SolapiMessageService:
             "api_secret": api_secret,
         }
 
-    # TODO: Request도 pydantic 모델로 진행
-    async def send(
+    def send(
         self,
-        messages: list[Message] | Message,
-        request_config: Optional[SendRequestConfig] = None,
+        messages: Union[list[Message], Message],
+        request_config: Optional[SendRequestConfig] = None
     ):
         payload = []
-        if isinstance(messages, list):
-            for value in messages:
-                payload.append(value)
-        else:
+        if isinstance(messages, Message):
             payload.append(messages)
-        pass
+        elif isinstance(messages, list):
+            payload.extend(messages)
 
         if len(payload) == 0:
-            raise Exception("데이터가 반드시 1건 이상 기입되어 있어야 합니다.")
+            raise ValueError("데이터가 반드시 1건 이상 기입되어 있어야 합니다.")
 
-        parameter: MultipleDetailMessageSendingRequest = {"messages": payload}
-        if request_config["appId"] is not None:
-            parameter.appId = request_config["appId"]
-        if request_config["showMessageList"] is not None:
-            parameter.showMessageList = request_config["showMessageList"]
-        if request_config["scheduledDate"] is not None:
-            parameter.scheduledDate = format_with_transfer(
-                request_config["scheduledDate"]
-            )
-
-        response = await default_fetcher(
-            self._auth_info,
-            {
-                "method": RequestMethod("POST"),
-                "url": f"${self.baseUrl}/messages/v4/send-many/detail",
-            },
-            parameter,
+        request = SendMessageRequest(
+            messages=payload,
+            app_id=request_config.app_id,
+            allow_duplicates=request_config.allow_duplicates,
+            show_message_list=request_config.show_message_list,
         )
-        validated_response = DetailGroupMessageResponse.model_validate(response)
-        count = validated_response.group_info.count
-        if (
-            len(validated_response.failed_message_list) > 0
-            and count.total == count.registeredFailed
-        ):
-            raise Exception("")
+        # TODO: 일어나면 여기부터 시작!
+        if request_config.scheduled_date != "":
+            request.scheduled_date = format_with_transfer(request_config.scheduled_date)
 
-        return validated_response
-
+        return default_fetcher(self._auth_info, request={
+            "method": RequestMethod.POST,
+            "url": f"{self.baseUrl}/messages/v4/send-many/detail"
+        }, data=request.model_dump())

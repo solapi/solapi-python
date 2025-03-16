@@ -1,5 +1,5 @@
 from enum import Enum
-from typing import Any, TypedDict, TypeVar
+from typing import Any, Optional, TypedDict
 
 import httpx
 from httpx import Response
@@ -14,22 +14,17 @@ class RequestMethod(str, Enum):
     DELETE = "DELETE"
 
 
-class RequestType(TypedDict):
+class RequestParameterType(TypedDict):
     method: RequestMethod
     url: str
 
 
-T = TypeVar("T")
-R = TypeVar("R")
-
-
-async def default_fetcher(
+def default_fetcher(
     auth_parameter: AuthenticationParameter,
-    request: RequestType,
-    data: T | None = None,
-) -> R:
+    request: RequestParameterType,
+    data: Optional[Any] = None,
+):
     """
-
     Args:
         auth_parameter: API Key, Api Secret Key Dictionary. 반드시 활성화된 유효한 API Key, API Secret Key를 입력하셔야 합니다.
         request: HTTP Request를 위한 파라미터, 정확한 API URL, HTTP Method를 입력해주세요!
@@ -46,8 +41,8 @@ async def default_fetcher(
         "Content-Type": "application/json",
     }
 
-    async with httpx.AsyncClient() as client:
-        response: Response = await client.request(
+    with httpx.Client() as client:
+        response: Response = client.request(
             method=request["method"], url=request["url"], headers=headers, json=data
         )
 
