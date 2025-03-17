@@ -4,8 +4,6 @@ from typing import Any, Optional
 
 from pydantic import BaseModel, Field
 
-from solapi.model.fax import FileIdsType
-
 
 class MessageType(Enum):
     """
@@ -42,6 +40,8 @@ class MessageType(Enum):
     FAX = "FAX"
     VOICE = "VOICE"
 
+class FileIdsType(BaseModel):
+    file_ids: list[str]
 
 class Message(BaseModel):
     from_: Optional[str] = Field(default=None, serialization_alias="from")
@@ -52,7 +52,7 @@ class Message(BaseModel):
     message_id: Optional[str] = Field(default=None, serialization_alias="messageId")
     group_id: Optional[str] = Field(default=None, serialization_alias="groupId")
     type: Optional[MessageType] = None
-    auto_type_detect: Optional[bool] = Field(default=False, serialization_alias="autoTypeDetect")
+    auto_type_detect: Optional[bool] = Field(default=True, serialization_alias="autoTypeDetect")
     date_created: Optional[datetime] = Field(default=None, serialization_alias="dateCreated")
     date_updated: Optional[datetime] = Field(default=None, serialization_alias="dateUpdated")
     subject: Optional[str] = None
@@ -64,5 +64,3 @@ class Message(BaseModel):
     kakao_options: Optional[dict[str, Any]] = Field(default=None, serialization_alias="kakaoOptions")
     rcs_options: Optional[dict[str, Any]] = Field(default=None, serialization_alias="rcsOptions")
     fax_options: Optional[FileIdsType] = Field(default=None, serialization_alias="faxOptions")
-
-

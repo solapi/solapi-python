@@ -15,7 +15,7 @@ class SendRequestConfig(BaseModel):
 
 class SendMessageRequest(BaseModel):
     messages: list[Message]
-    scheduled_date: Optional[str] = Field(default=None, serialization_alias="scheduled_date")
+    scheduled_date: Optional[str] = Field(default=None, serialization_alias="scheduledDate")
     show_message_list: Optional[bool] = Field(default=False, serialization_alias="showMessageList")
     allow_duplicates: bool = Field(default=False, serialization_alias="allowDuplicates")
     app_id: Optional[str] = Field(default=None, serialization_alias="appId")
