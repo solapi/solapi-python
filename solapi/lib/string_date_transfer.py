@@ -1,5 +1,6 @@
 import re
-from datetime import datetime
+import time
+from datetime import datetime, timedelta, timezone
 from typing import Union
 
 
@@ -24,7 +25,9 @@ def format_iso(date: datetime) -> str:
     Returns:
         ISO 8601 형식의 문자열 (예: '2023-01-01T12:00:00Z')
     """
-    return date.isoformat()
+    utc_offset_sec = time.altzone if time.localtime().tm_isdst else time.timezone
+    utc_offset = timedelta(seconds=-utc_offset_sec)
+    return date.replace(tzinfo=timezone(offset=utc_offset)).isoformat()
 
 
 def parse_iso(date_string: str) -> datetime:
@@ -83,7 +86,7 @@ def string_date_transfer(value: Union[str, datetime]):
     return value
 
 
-def format_with_transfer(value: str) -> str:
+def format_with_transfer(value: Union[str, datetime]) -> str:
     """
     string_date_transfer와 format_iso를 한번에 실행하는 함수
 

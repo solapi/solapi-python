@@ -1,5 +1,6 @@
 import platform
-from typing import Optional
+from datetime import datetime
+from typing import Optional, Union
 
 from pydantic import BaseModel, Field
 
@@ -12,7 +13,7 @@ class SendRequestConfig(BaseModel):
     show_message_list: bool = Field(
         default=False, serialization_alias="showMessageList"
     )
-    scheduled_date: Optional[str] = Field(
+    scheduled_date: Optional[Union[str, datetime]] = Field(
         default=None, serialization_alias="scheduledDate"
     )
 

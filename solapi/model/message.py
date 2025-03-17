@@ -2,7 +2,7 @@ from datetime import datetime
 from enum import Enum
 from typing import Any, Optional
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, ConfigDict, Field
 
 
 class MessageType(Enum):
@@ -47,37 +47,55 @@ class FileIdsType(BaseModel):
 
 
 class Message(BaseModel):
-    from_: Optional[str] = Field(default=None, serialization_alias="from")
+    from_: Optional[str] = Field(
+        default=None, serialization_alias="from", validation_alias="from"
+    )
     to: str
     text: Optional[str] = None
-    image_id: Optional[str] = Field(default=None, serialization_alias="imageId")
+    image_id: Optional[str] = Field(
+        default=None, serialization_alias="imageId", validation_alias="imageId"
+    )
     country: str = "82"
-    message_id: Optional[str] = Field(default=None, serialization_alias="messageId")
-    group_id: Optional[str] = Field(default=None, serialization_alias="groupId")
+    message_id: Optional[str] = Field(
+        default=None, serialization_alias="messageId", validation_alias="messageId"
+    )
+    group_id: Optional[str] = Field(
+        default=None, serialization_alias="groupId", validation_alias="groupId"
+    )
     type: Optional[MessageType] = None
     auto_type_detect: Optional[bool] = Field(
-        default=True, serialization_alias="autoTypeDetect"
+        default=True,
+        serialization_alias="autoTypeDetect",
+        validation_alias="autoTypeDetect",
     )
     date_created: Optional[datetime] = Field(
-        default=None, serialization_alias="dateCreated"
+        default=None, serialization_alias="dateCreated", validation_alias="dateCreated"
     )
     date_updated: Optional[datetime] = Field(
-        default=None, serialization_alias="dateUpdated"
+        default=None, serialization_alias="dateUpdated", validation_alias="dateUpdated"
     )
     subject: Optional[str] = None
     log: Optional[list[dict[str, Any]]] = None
     replacements: Optional[list[dict[str, Any]]] = None
-    status_code: Optional[str] = Field(default=None, serialization_alias="statusCode")
+    status_code: Optional[str] = Field(
+        default=None, serialization_alias="statusCode", validation_alias="statusCode"
+    )
     custom_fields: Optional[dict[str, str]] = Field(
-        default=None, serialization_alias="customFields"
+        default=None,
+        serialization_alias="customFields",
+        validation_alias="customFields",
     )
     # TODO: kakaoOptions Model 정의해야 함..
     kakao_options: Optional[dict[str, Any]] = Field(
-        default=None, serialization_alias="kakaoOptions"
+        default=None,
+        serialization_alias="kakaoOptions",
+        validation_alias="kakaoOptions",
     )
     rcs_options: Optional[dict[str, Any]] = Field(
-        default=None, serialization_alias="rcsOptions"
+        default=None, serialization_alias="rcsOptions", validation_alias="rcsOptions"
     )
     fax_options: Optional[FileIdsType] = Field(
-        default=None, serialization_alias="faxOptions"
+        default=None, serialization_alias="faxOptions", validation_alias="faxOptions"
     )
+
+    model_config = ConfigDict(extra="ignore")

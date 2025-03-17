@@ -47,12 +47,11 @@ def default_fetcher(
         )
 
     # 4xx 에러 처리: 클라이언트 오류일 경우
-    # TODO: Custom Error 만들어야 함
     if 400 <= response.status_code < 500:
         error_response: dict[str, Any] = response.json()
         raise Exception(
             error_response.get("errorCode", "UnknownError"),
-            error_response.get("errorMessage", ""),
+            error_response.get("errorMessage", "An Error occurred"),
         )
     # 5xx 에러 처리: 서버 오류일 경우
     elif response.status_code >= 500:

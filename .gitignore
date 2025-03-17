@@ -33,6 +33,7 @@ build/
 *.bak
 *.swp
 *.swo
+debug
 
 # ruff
 .ruff_cache/
