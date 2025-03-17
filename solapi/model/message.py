@@ -24,6 +24,7 @@ class MessageType(Enum):
     FAX: 팩스
     VOICE: 음성문자(TTS)
     """
+
     SMS = "SMS"
     LMS = "LMS"
     MMS = "MMS"
@@ -40,8 +41,10 @@ class MessageType(Enum):
     FAX = "FAX"
     VOICE = "VOICE"
 
+
 class FileIdsType(BaseModel):
     file_ids: list[str]
+
 
 class Message(BaseModel):
     from_: Optional[str] = Field(default=None, serialization_alias="from")
@@ -52,15 +55,29 @@ class Message(BaseModel):
     message_id: Optional[str] = Field(default=None, serialization_alias="messageId")
     group_id: Optional[str] = Field(default=None, serialization_alias="groupId")
     type: Optional[MessageType] = None
-    auto_type_detect: Optional[bool] = Field(default=True, serialization_alias="autoTypeDetect")
-    date_created: Optional[datetime] = Field(default=None, serialization_alias="dateCreated")
-    date_updated: Optional[datetime] = Field(default=None, serialization_alias="dateUpdated")
+    auto_type_detect: Optional[bool] = Field(
+        default=True, serialization_alias="autoTypeDetect"
+    )
+    date_created: Optional[datetime] = Field(
+        default=None, serialization_alias="dateCreated"
+    )
+    date_updated: Optional[datetime] = Field(
+        default=None, serialization_alias="dateUpdated"
+    )
     subject: Optional[str] = None
     log: Optional[list[dict[str, Any]]] = None
     replacements: Optional[list[dict[str, Any]]] = None
     status_code: Optional[str] = Field(default=None, serialization_alias="statusCode")
-    custom_fields: Optional[dict[str, str]] = Field(default=None, serialization_alias="customFields")
+    custom_fields: Optional[dict[str, str]] = Field(
+        default=None, serialization_alias="customFields"
+    )
     # TODO: kakaoOptions Model 정의해야 함..
-    kakao_options: Optional[dict[str, Any]] = Field(default=None, serialization_alias="kakaoOptions")
-    rcs_options: Optional[dict[str, Any]] = Field(default=None, serialization_alias="rcsOptions")
-    fax_options: Optional[FileIdsType] = Field(default=None, serialization_alias="faxOptions")
+    kakao_options: Optional[dict[str, Any]] = Field(
+        default=None, serialization_alias="kakaoOptions"
+    )
+    rcs_options: Optional[dict[str, Any]] = Field(
+        default=None, serialization_alias="rcsOptions"
+    )
+    fax_options: Optional[FileIdsType] = Field(
+        default=None, serialization_alias="faxOptions"
+    )

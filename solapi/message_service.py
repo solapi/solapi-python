@@ -21,7 +21,7 @@ class SolapiMessageService:
     def send(
         self,
         messages: Union[list[Message], Message],
-        request_config: Optional[SendRequestConfig] = None
+        request_config: Optional[SendRequestConfig] = None,
     ):
         payload = []
         if isinstance(messages, Message):
@@ -32,20 +32,24 @@ class SolapiMessageService:
         if len(payload) == 0:
             raise ValueError("데이터가 반드시 1건 이상 기입되어 있어야 합니다.")
 
-        request = SendMessageRequest(
-            messages=payload
-        )
+        request = SendMessageRequest(messages=payload)
         if request_config is not None:
             request.app_id = request_config["app_id"]
             request.allow_duplicates = request_config["allow_duplicates"]
             request.show_message_list = request_config["show_message_list"]
 
             if request_config.scheduled_date != "":
-                request.scheduled_date = format_with_transfer(request_config.scheduled_date)
+                request.scheduled_date = format_with_transfer(
+                    request_config.scheduled_date
+                )
 
         print(request.model_dump(exclude_none=True, by_alias=True))
 
-        return default_fetcher(self._auth_info, request={
-            "method": RequestMethod.POST,
-            "url": f"{self.baseUrl}/messages/v4/send-many/detail"
-        }, data=request.model_dump(exclude_none=True, by_alias=True))
+        return default_fetcher(
+            self._auth_info,
+            request={
+                "method": RequestMethod.POST,
+                "url": f"{self.baseUrl}/messages/v4/send-many/detail",
+            },
+            data=request.model_dump(exclude_none=True, by_alias=True),
+        )
