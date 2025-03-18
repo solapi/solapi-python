@@ -1,6 +1,7 @@
 from datetime import datetime
 from typing import Optional, Union
 
+from solapi.error.MessageNotReceiveError import MessageNotReceivedError
 from solapi.lib.authenticator import AuthenticationParameter
 from solapi.lib.fetcher import RequestMethod, default_fetcher
 from solapi.lib.string_date_transfer import format_with_transfer
@@ -73,6 +74,6 @@ class SolapiMessageService:
         failed_messages = deserialized_response.failed_message_list
         registered_failed_count = count.registered_failed
         if len(failed_messages) > 0 and count.total == registered_failed_count:
-            raise ValueError("an error occurred")
+            raise MessageNotReceivedError(failed_messages) from ValueError
 
         return deserialized_response

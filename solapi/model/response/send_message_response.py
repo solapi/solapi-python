@@ -14,24 +14,21 @@ class MessageItem(BaseModel):
 
     model_config = ConfigDict(alias_generator=to_camel, populate_by_name=True)
 
-# TODO: Need to resolve FailedMessage from property deserialize issue.
 class FailedMessage(BaseModel):
-    to: str
-    from_: str = Field(..., serialization_alias="from", validation_alias="from")
+    to: Optional[str]
+    from_: Optional[str] = Field(..., serialization_alias="from", validation_alias="from")
     type: str
     status_message: str = Field(..., alias="statusMessage")
-    country: str
+    country: Optional[str]
     message_id: str = Field(..., alias="messageId")
     status_code: str = Field(..., alias="statusCode")
     account_id: str = Field(..., alias="accountId")
-    custom_fields: Optional[dict[str, str]] = Field(default=None)
-
-    model_config = ConfigDict(alias_generator=to_camel, populate_by_name=True)
+    custom_fields: Optional[dict[str, str]] = Field(default=None, alias="customFields")
 
 
 class SendMessageResponse(BaseModel):
     failed_message_list: Optional[list[FailedMessage]] = None
     group_info: GroupMessageResponse
-    message_list: Optional[list[MessageItem]] = Field(default=None)
+    message_list: Optional[list[MessageItem]] = None
 
     model_config = ConfigDict(alias_generator=to_camel, populate_by_name=True)
