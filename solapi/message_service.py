@@ -65,11 +65,12 @@ class SolapiMessageService:
             },
             data=request.model_dump(exclude_none=True, by_alias=True),
         )
+        print(response)
         deserialized_response: SendMessageResponse = SendMessageResponse.model_validate(
             response
         )
 
-        count = deserialized_response.count
+        count = deserialized_response.group_info.count
         failed_messages = deserialized_response.failed_message_list
         registered_failed_count = count.registered_failed
         if len(failed_messages) > 0 and count.total == registered_failed_count:

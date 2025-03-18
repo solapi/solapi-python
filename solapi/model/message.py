@@ -3,6 +3,7 @@ from enum import Enum
 from typing import Any, Optional
 
 from pydantic import BaseModel, ConfigDict, Field
+from pydantic.alias_generators import to_camel
 
 
 class MessageType(Enum):
@@ -98,4 +99,6 @@ class Message(BaseModel):
         default=None, serialization_alias="faxOptions", validation_alias="faxOptions"
     )
 
-    model_config = ConfigDict(extra="ignore")
+    model_config = ConfigDict(
+        extra="ignore", populate_by_name=True, alias_generator=to_camel
+    )

@@ -1,7 +1,8 @@
 from datetime import datetime
-from typing import Any
+from typing import Any, Optional
 
 from pydantic import BaseModel, ConfigDict, Field
+from pydantic.alias_generators import to_camel
 
 
 class CountResponse(BaseModel):
@@ -18,10 +19,10 @@ class CountResponse(BaseModel):
 
 
 class CommonCashResponse(BaseModel):
-    requested: int
-    replacement: int
-    refund: int
-    sum: int
+    requested: float
+    replacement: float
+    refund: float
+    sum: float
 
     model_config = ConfigDict(extra="ignore")
 
@@ -43,45 +44,28 @@ class CountForChargeResponse(BaseModel):
 
 
 class GroupMessageResponse(BaseModel):
-    # export type GroupMessageResponse = {
-    #   count: Count;
-    #   countForCharge: CountForCharge;
-    #   balance: CommonCashResponse;
-    #   point: CommonCashResponse;
-    #   app: App;
-    #   log: Log;
-    #   status: string;
-    #   allowDuplicates: boolean;
-    #   isRefunded: boolean;
-    #   accountId: string;
-    #   masterAccountId: string | null;
-    #   apiVersion: string;
-    #   groupId: string;
-    #   price: object;
-    #   dateCreated: string;
-    #   dateUpdated: string;
-    #   scheduledDate?: string;
-    #   dateSent?: string;
-    #   dateCompleted?: string;
-    # };
     count: CountResponse
-    count_for_charge: Any = Field(..., validation_alias="countForCharge")
+    count_for_charge: Any
     balance: CommonCashResponse
     point: CommonCashResponse
     app: Any
     log: Any
     status: str
-    allow_duplicates: bool = Field(..., validation_alias="allowDuplicates")
-    is_refunded: bool = Field(..., validation_alias="isRefunded")
-    account_id: str = Field(..., validation_alias="accountId")
-    master_account_id: str = Field(..., validation_alias="masterAccountId")
-    api_version: str = Field(..., validation_alias="apiVersion")
-    group_id: str = Field(..., validation_alias="groupId")
+    allow_duplicates: bool
+    is_refunded: bool
+    account_id: str
+    master_account_id: Optional[str]
+    api_version: str
+    group_id: str
     price: Any
-    date_created: datetime = Field(..., validation_alias="dateCreated")
-    date_updated: datetime = Field(..., validation_alias="dateUpdated")
-    scheduled_date: datetime = Field(..., validation_alias="scheduledDate")
-    date_sent: datetime = Field(..., validation_alias="dateSent")
-    date_completed: datetime = Field(..., validation_alias="dateCompleted")
+    date_created: Optional[datetime]
+    date_updated: Optional[datetime]
+    scheduled_date: Optional[datetime] = Field(default=None)
+    date_sent: Optional[datetime]
+    date_completed: Optional[datetime]
 
-    model_config = ConfigDict(extra="ignore")
+    model_config = ConfigDict(
+        alias_generator=to_camel,
+        populate_by_name=True,
+        extra="ignore",
+    )
