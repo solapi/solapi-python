@@ -65,7 +65,6 @@ class SolapiMessageService:
             },
             data=request.model_dump(exclude_none=True, by_alias=True),
         )
-        print(response)
         deserialized_response: SendMessageResponse = SendMessageResponse.model_validate(
             response
         )

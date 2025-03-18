@@ -6,6 +6,15 @@ from pydantic.alias_generators import to_camel
 from solapi.model.response.common_response import GroupMessageResponse
 
 
+class MessageItem(BaseModel):
+    message_id: str
+    status_code: str
+    status_message: str
+    custom_fields: Optional[dict[str, str]] = None
+
+    model_config = ConfigDict(alias_generator=to_camel, populate_by_name=True)
+
+# TODO: Need to resolve FailedMessage from property deserialize issue.
 class FailedMessage(BaseModel):
     to: str
     from_: str = Field(..., serialization_alias="from", validation_alias="from")
@@ -23,6 +32,6 @@ class FailedMessage(BaseModel):
 class SendMessageResponse(BaseModel):
     failed_message_list: Optional[list[FailedMessage]] = None
     group_info: GroupMessageResponse
-    message_list: Optional[list] = Field(default=None)
+    message_list: Optional[list[MessageItem]] = Field(default=None)
 
     model_config = ConfigDict(alias_generator=to_camel, populate_by_name=True)
