@@ -14,9 +14,12 @@ class MessageItem(BaseModel):
 
     model_config = ConfigDict(alias_generator=to_camel, populate_by_name=True)
 
+
 class FailedMessage(BaseModel):
     to: Optional[str]
-    from_: Optional[str] = Field(..., serialization_alias="from", validation_alias="from")
+    from_: Optional[str] = Field(
+        ..., serialization_alias="from", validation_alias="from"
+    )
     type: str
     status_message: str = Field(..., alias="statusMessage")
     country: Optional[str]

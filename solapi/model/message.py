@@ -100,5 +100,7 @@ class Message(BaseModel):
     )
 
     model_config = ConfigDict(
-        extra="ignore", populate_by_name=True, alias_generator=to_camel
+        extra="ignore",
+        populate_by_name=True,
+        alias_generator=to_camel,
     )

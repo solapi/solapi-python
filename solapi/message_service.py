@@ -1,4 +1,6 @@
+import base64
 from datetime import datetime
+from pathlib import Path
 from typing import Optional, Union
 
 from solapi.error.MessageNotReceiveError import MessageNotReceivedError
@@ -10,7 +12,9 @@ from solapi.model.request.send_message_request import (
     SendMessageRequest,
     SendRequestConfig,
 )
+from solapi.model.request.storage import FileTypeEnum, FileUploadRequest
 from solapi.model.response.send_message_response import SendMessageResponse
+from solapi.model.response.storage import FileUploadResponse
 
 
 class SolapiMessageService:
@@ -76,4 +80,28 @@ class SolapiMessageService:
         if len(failed_messages) > 0 and count.total == registered_failed_count:
             raise MessageNotReceivedError(failed_messages) from ValueError
 
+        return deserialized_response
+
+    def upload_file(
+        self, file_path: str, upload_type: FileTypeEnum = FileTypeEnum.MMS
+    ) -> FileUploadResponse:
+        path = Path(file_path)
+        with open(path, "rb") as image_file:
+            encoded_string = base64.b64encode(image_file.read())
+
+        request = FileUploadRequest(
+            file=str(encoded_string)[2:-1],
+            type=upload_type,
+        ).model_dump(exclude_none=True)
+        response = default_fetcher(
+            self.auth_info,
+            request={
+                "url": f"{self.base_url}/storage/v1/files",
+                "method": RequestMethod.POST,
+            },
+            data=request,
+        )
+        deserialized_response: FileUploadResponse = FileUploadResponse.model_validate(
+            response
+        )
         return deserialized_response
