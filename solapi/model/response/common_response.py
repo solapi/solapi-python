@@ -28,28 +28,37 @@ class CommonCashResponse(BaseModel):
 
 
 class CountForChargeResponse(BaseModel):
-    sms: dict[str, int]
-    lms: dict[str, int]
-    mms: dict[str, int]
-    ata: dict[str, int]
-    cta: dict[str, int]
-    cti: dict[str, int]
-    nsa: dict[str, int]
-    rcs_sms: dict[str, int]
-    rcs_lms: dict[str, int]
-    rcs_mms: dict[str, int]
-    rcs_tpl: dict[str, int]
+    sms: dict[str, float]
+    lms: dict[str, float]
+    mms: dict[str, float]
+    ata: dict[str, float]
+    cta: dict[str, float]
+    cti: dict[str, float]
+    nsa: dict[str, float]
+    rcs_sms: dict[str, float]
+    rcs_lms: dict[str, float]
+    rcs_mms: dict[str, float]
+    rcs_tpl: dict[str, float]
 
     model_config = ConfigDict(extra="ignore")
 
 
+class AppResponse(BaseModel):
+    profit: CountForChargeResponse
+    app_id: Optional[str] = None
+
+    model_config = ConfigDict(
+        extra="ignore", alias_generator=to_camel, populate_by_name=True
+    )
+
+
 class GroupMessageResponse(BaseModel):
     count: CountResponse
-    count_for_charge: Any
+    count_for_charge: CountForChargeResponse
     balance: CommonCashResponse
     point: CommonCashResponse
-    app: Any
-    log: Any
+    app: AppResponse
+    log: list[dict[str, str]]
     status: str
     allow_duplicates: bool
     is_refunded: bool
@@ -60,9 +69,9 @@ class GroupMessageResponse(BaseModel):
     price: Any
     date_created: Optional[datetime]
     date_updated: Optional[datetime]
-    scheduled_date: Optional[datetime] = Field(default=None)
-    date_sent: Optional[datetime]
-    date_completed: Optional[datetime]
+    scheduled_date: Optional[datetime] = None
+    date_sent: Optional[datetime] = None
+    date_completed: Optional[datetime] = None
 
     model_config = ConfigDict(
         alias_generator=to_camel,
