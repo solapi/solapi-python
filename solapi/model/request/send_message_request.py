@@ -2,19 +2,20 @@ import platform
 from datetime import datetime
 from typing import Optional, Union
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, ConfigDict, Field
+from pydantic.alias_generators import to_camel
 
 from solapi.model.message import Message
 
 
 class SendRequestConfig(BaseModel):
-    app_id: Optional[str] = Field(default=None, serialization_alias="appId")
-    allow_duplicates: bool = Field(default=False, serialization_alias="allowDuplicates")
-    show_message_list: bool = Field(
-        default=False, serialization_alias="showMessageList"
-    )
-    scheduled_date: Optional[Union[str, datetime]] = Field(
-        default=None, serialization_alias="scheduledDate"
+    app_id: Optional[str] = None
+    allow_duplicates: bool = False
+    show_message_list: bool = False
+    scheduled_date: Optional[Union[str, datetime]] = None
+
+    model_config = ConfigDict(
+        alias_generator=to_camel, extra="ignore", populate_by_name=True
     )
 
 

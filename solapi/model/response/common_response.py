@@ -54,11 +54,11 @@ class AppResponse(BaseModel):
 
 class GroupMessageResponse(BaseModel):
     count: CountResponse
-    count_for_charge: CountForChargeResponse
+    count_for_charge: Any
     balance: CommonCashResponse
     point: CommonCashResponse
-    app: AppResponse
-    log: list[dict[str, str]]
+    app: Any
+    log: Any
     status: str
     allow_duplicates: bool
     is_refunded: bool

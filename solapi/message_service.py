@@ -53,15 +53,15 @@ class SolapiMessageService:
             request.allow_duplicates = request_config.allow_duplicates
             request.show_message_list = request_config.show_message_list
 
-            if (
-                request_config.scheduled_date is not None
-                and request_config.scheduled_date != ""
-                and isinstance(request_config.scheduled_date, datetime)
+            if request_config.scheduled_date is not None and (
+                request_config.scheduled_date != ""
+                or isinstance(request_config.scheduled_date, datetime)
             ):
                 request.scheduled_date = format_with_transfer(
                     request_config.scheduled_date
                 )
 
+        print(request.model_dump(exclude_none=True, by_alias=True))
         response = default_fetcher(
             self.auth_info,
             request={
@@ -105,3 +105,25 @@ class SolapiMessageService:
             response
         )
         return deserialized_response
+
+    # TODO: 조회 기능들 개발해야 함
+    def get_groups(self):
+        return ""
+
+    def get_group(self, group_id: str):
+        return group_id
+
+    def get_group_messages(self, group_id: str):
+        return group_id
+
+    def get_messages(self):
+        return ""
+
+    def get_message(self, message_id: str):
+        return message_id
+
+    def get_naver_templates(self):
+        return ""
+
+    def get_balance(self):
+        return ""
