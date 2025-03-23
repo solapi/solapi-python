@@ -60,8 +60,6 @@ class SolapiMessageService:
                 request.scheduled_date = format_with_transfer(
                     request_config.scheduled_date
                 )
-
-        print(request.model_dump(exclude_none=True, by_alias=True))
         response = default_fetcher(
             self.auth_info,
             request={

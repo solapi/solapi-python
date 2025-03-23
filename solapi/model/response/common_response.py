@@ -39,12 +39,36 @@ class CountForChargeResponse(BaseModel):
     rcs_lms: dict[str, float]
     rcs_mms: dict[str, float]
     rcs_tpl: dict[str, float]
+    rcs_itpl: dict[str, float]
+    rcs_ltpl: dict[str, float]
+    fax: dict[str, float]
+    voice: dict[str, float]
+
+    model_config = ConfigDict(extra="ignore")
+
+
+class AppProfitResponse(BaseModel):
+    sms: float
+    lms: float
+    mms: float
+    ata: float
+    cta: float
+    cti: float
+    nsa: float
+    rcs_sms: float
+    rcs_lms: float
+    rcs_mms: float
+    rcs_tpl: float
+    rcs_itpl: float
+    rcs_ltpl: float
+    fax: float
+    voice: float
 
     model_config = ConfigDict(extra="ignore")
 
 
 class AppResponse(BaseModel):
-    profit: CountForChargeResponse
+    profit: AppProfitResponse
     app_id: Optional[str] = None
 
     model_config = ConfigDict(
@@ -54,10 +78,10 @@ class AppResponse(BaseModel):
 
 class GroupMessageResponse(BaseModel):
     count: CountResponse
-    count_for_charge: Any
+    count_for_charge: CountForChargeResponse
     balance: CommonCashResponse
     point: CommonCashResponse
-    app: Any
+    app: AppResponse
     log: Any
     status: str
     allow_duplicates: bool

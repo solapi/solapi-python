@@ -1,5 +1,5 @@
-from solapi.message_service import SolapiMessageService
-from solapi.model.message import Message
+from solapi import SolapiMessageService
+from solapi.model import Message
 
 message_service = SolapiMessageService(
     api_key="YOUR_API_KEY", api_secret="YOUR_API_SECRET"
