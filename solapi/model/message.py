@@ -5,6 +5,8 @@ from typing import Any, Optional
 from pydantic import BaseModel, ConfigDict, Field
 from pydantic.alias_generators import to_camel
 
+from solapi.model import KakaoOption
+
 
 class MessageType(Enum):
     """
@@ -86,8 +88,7 @@ class Message(BaseModel):
         serialization_alias="customFields",
         validation_alias="customFields",
     )
-    # TODO: kakaoOptions Model 정의해야 함..
-    kakao_options: Optional[dict[str, Any]] = Field(
+    kakao_options: Optional[KakaoOption] = Field(
         default=None,
         serialization_alias="kakaoOptions",
         validation_alias="kakaoOptions",

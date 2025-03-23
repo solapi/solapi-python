@@ -12,5 +12,6 @@ class KakaoOption(BaseModel):
     ad_flag: bool = False
     buttons: Optional[dict[str, str]] = None
     image_id: Optional[str] = None
+    title: Optional[str] = None
 
     model_config = ConfigDict(alias_generator=to_camel, populate_by_name=True)
