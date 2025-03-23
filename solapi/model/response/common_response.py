@@ -7,15 +7,17 @@ from pydantic.alias_generators import to_camel
 
 class CountResponse(BaseModel):
     total: int
-    sent_total: int = Field(..., validation_alias="sentTotal")
-    sent_success: int = Field(..., validation_alias="sentSuccess")
-    sent_pending: int = Field(..., validation_alias="sentPending")
-    sent_replacement: int = Field(..., validation_alias="sentReplacement")
+    sent_total: int
+    sent_success: int
+    sent_pending: int
+    sent_replacement: int
     refund: int
-    registered_failed: int = Field(..., validation_alias="registeredFailed")
-    registered_success: int = Field(..., validation_alias="registeredSuccess")
+    registered_failed: int
+    registered_success: int
 
-    model_config = ConfigDict(extra="ignore")
+    model_config = ConfigDict(
+        extra="ignore", alias_generator=to_camel, populate_by_name=True
+    )
 
 
 class CommonCashResponse(BaseModel):
@@ -27,7 +29,7 @@ class CommonCashResponse(BaseModel):
     model_config = ConfigDict(extra="ignore")
 
 
-class CountForChargeResponse(BaseModel):
+class CommonPriceTypeResponse(BaseModel):
     sms: dict[str, float]
     lms: dict[str, float]
     mms: dict[str, float]
@@ -47,7 +49,7 @@ class CountForChargeResponse(BaseModel):
     model_config = ConfigDict(extra="ignore")
 
 
-class AppProfitResponse(BaseModel):
+class EachTypePriceResponse(BaseModel):
     sms: float
     lms: float
     mms: float
@@ -68,7 +70,7 @@ class AppProfitResponse(BaseModel):
 
 
 class AppResponse(BaseModel):
-    profit: AppProfitResponse
+    profit: EachTypePriceResponse
     app_id: Optional[str] = None
 
     model_config = ConfigDict(
@@ -78,11 +80,11 @@ class AppResponse(BaseModel):
 
 class GroupMessageResponse(BaseModel):
     count: CountResponse
-    count_for_charge: CountForChargeResponse
+    count_for_charge: CommonPriceTypeResponse
     balance: CommonCashResponse
     point: CommonCashResponse
     app: AppResponse
-    log: Any
+    log: list[dict[str, Any]]
     status: str
     allow_duplicates: bool
     is_refunded: bool
@@ -90,7 +92,7 @@ class GroupMessageResponse(BaseModel):
     master_account_id: Optional[str]
     api_version: str
     group_id: str
-    price: Any
+    price: dict[str, EachTypePriceResponse]
     date_created: Optional[datetime]
     date_updated: Optional[datetime]
     scheduled_date: Optional[datetime] = None
