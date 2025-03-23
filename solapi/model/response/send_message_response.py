@@ -28,6 +28,8 @@ class FailedMessage(BaseModel):
     account_id: str = Field(..., alias="accountId")
     custom_fields: Optional[dict[str, str]] = Field(default=None, alias="customFields")
 
+    model_config = ConfigDict(extra="ignore", populate_by_name=True)
+
 
 class SendMessageResponse(BaseModel):
     failed_message_list: Optional[list[FailedMessage]] = None

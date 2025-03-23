@@ -9,6 +9,8 @@ class KakaoFileUploadResponseProperty(BaseModel):
     daou: Optional[str] = None
     biztalk: Optional[str] = None
 
+    model_config = ConfigDict(extra="ignore")
+
 
 class FileUploadResponse(BaseModel):
     kakao: Optional[KakaoFileUploadResponseProperty] = None
@@ -24,6 +26,5 @@ class FileUploadResponse(BaseModel):
     date_updated: Optional[datetime] = None
 
     model_config = ConfigDict(
-        alias_generator=to_camel,
-        populate_by_name=True,
+        alias_generator=to_camel, populate_by_name=True, extra="ignore"
     )
