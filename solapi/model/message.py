@@ -6,6 +6,7 @@ from pydantic import BaseModel, ConfigDict, Field
 from pydantic.alias_generators import to_camel
 
 from solapi.model import KakaoOption
+from solapi.model.rcs.rcs_options import RcsOption
 
 
 class MessageType(Enum):
@@ -44,9 +45,15 @@ class MessageType(Enum):
     FAX = "FAX"
     VOICE = "VOICE"
 
+    def __str__(self) -> str:
+        return self.value
+
+    def __repr__(self):
+        return repr(self.value)
+
 
 class FileIdsType(BaseModel):
-    file_ids: list[str]
+    file_ids: Optional[list[str]] = None
 
 
 class Message(BaseModel):
@@ -71,18 +78,8 @@ class Message(BaseModel):
         serialization_alias="autoTypeDetect",
         validation_alias="autoTypeDetect",
     )
-    date_created: Optional[datetime] = Field(
-        default=None, serialization_alias="dateCreated", validation_alias="dateCreated"
-    )
-    date_updated: Optional[datetime] = Field(
-        default=None, serialization_alias="dateUpdated", validation_alias="dateUpdated"
-    )
     subject: Optional[str] = None
-    log: Optional[list[dict[str, Any]]] = None
     replacements: Optional[list[dict[str, Any]]] = None
-    status_code: Optional[str] = Field(
-        default=None, serialization_alias="statusCode", validation_alias="statusCode"
-    )
     custom_fields: Optional[dict[str, str]] = Field(
         default=None,
         serialization_alias="customFields",
@@ -93,11 +90,21 @@ class Message(BaseModel):
         serialization_alias="kakaoOptions",
         validation_alias="kakaoOptions",
     )
-    rcs_options: Optional[dict[str, Any]] = Field(
+    rcs_options: Optional[RcsOption] = Field(
         default=None, serialization_alias="rcsOptions", validation_alias="rcsOptions"
     )
     fax_options: Optional[FileIdsType] = Field(
         default=None, serialization_alias="faxOptions", validation_alias="faxOptions"
+    )
+    date_created: Optional[datetime] = Field(
+        default=None, serialization_alias="dateCreated", validation_alias="dateCreated"
+    )
+    date_updated: Optional[datetime] = Field(
+        default=None, serialization_alias="dateUpdated", validation_alias="dateUpdated"
+    )
+    log: Optional[list[dict[str, Any]]] = None
+    status_code: Optional[str] = Field(
+        default=None, serialization_alias="statusCode", validation_alias="statusCode"
     )
 
     model_config = ConfigDict(

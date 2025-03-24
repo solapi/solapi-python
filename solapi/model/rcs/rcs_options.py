@@ -20,6 +20,12 @@ class RcsMmsType(str, Enum):
     M5 = "M5"
     M6 = "M6"
 
+    def __str__(self) -> str:
+        return self.value
+
+    def __repr__(self):
+        return repr(self.value)
+
 
 class RcsAdditionalBody(BaseModel):
     title: str
@@ -44,6 +50,12 @@ class RcsButtonType(str, Enum):
     DL = "DL"
     MS = "MS"
 
+    def __str__(self) -> str:
+        return self.value
+
+    def __repr__(self):
+        return repr(self.value)
+
 
 class RcsButton(BaseModel):
     button_type: RcsButtonType
@@ -62,7 +74,7 @@ class RcsButton(BaseModel):
     model_config = ConfigDict(alias_generator=to_camel, populate_by_name=True)
 
 
-class RcsOptions(BaseModel):
+class RcsOption(BaseModel):
     brand_id: Optional[str] = None
     template_id: Optional[str] = None
     copy_allowed: Optional[bool] = None
@@ -70,7 +82,7 @@ class RcsOptions(BaseModel):
     mms_type: Optional[RcsMmsType] = None
     commercial_type: Optional[bool] = None
     disable_sms: Optional[bool] = False
-    additional_body: Optional[RcsAdditionalBody] = None
-    buttons: Optional[RcsButton] = None
+    additional_body: Optional[list[RcsAdditionalBody]] = None
+    buttons: Optional[list[RcsButton]] = None
 
     model_config = ConfigDict(alias_generator=to_camel, populate_by_name=True)

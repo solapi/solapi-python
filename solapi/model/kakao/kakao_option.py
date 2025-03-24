@@ -4,14 +4,12 @@ from pydantic import BaseModel, ConfigDict
 from pydantic.alias_generators import to_camel
 
 
+# TODO: Request, Response용 모델을 별도로 분리해야 함
 class KakaoOption(BaseModel):
-    pf_id: str
+    pf_id: Optional[str] = None
     template_id: Optional[str] = None
     variables: Optional[dict[str, str]] = None
     disable_sms: bool = False
-    ad_flag: bool = False
-    buttons: Optional[dict[str, str]] = None
     image_id: Optional[str] = None
-    title: Optional[str] = None
 
     model_config = ConfigDict(alias_generator=to_camel, populate_by_name=True)
