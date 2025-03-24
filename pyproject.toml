@@ -1,0 +1,40 @@
+[project]
+name = "solapi"
+version = "5.0.0"
+description = "SOLAPI SDK for Python"
+authors = [
+    { name = "SOLAPI Team", email = "contact@solapi.com" }
+]
+classifiers = [
+    'Programming Language :: Python',
+    'Programming Language :: Python :: Implementation :: CPython',
+    'Programming Language :: Python :: Implementation :: PyPy',
+    'Programming Language :: Python :: 3',
+    'Programming Language :: Python :: 3 :: Only',
+    'Programming Language :: Python :: 3.9',
+    'Programming Language :: Python :: 3.10',
+    'Programming Language :: Python :: 3.11',
+    'Programming Language :: Python :: 3.12',
+    'Programming Language :: Python :: 3.13',
+    'Intended Audience :: Developers',
+    'Intended Audience :: Information Technology',
+    'License :: OSI Approved :: MIT License',
+    'Operating System :: OS Independent',
+    'Topic :: Software Development :: Libraries :: Python Modules',
+    'Topic :: Internet',
+]
+readme = "README.md"
+requires-python = ">=3.9"
+dependencies = [
+    "httpx (>=0.28.1,<0.29.0)",
+    "pydantic (>=2.10.6,<3.0.0)"
+]
+
+[project.optional-dependencies]
+dev = [
+    "ruff>=0.11.0"
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"

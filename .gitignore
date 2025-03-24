@@ -1,6 +1,39 @@
-.idea/
-venv/
+# Python
 __pycache__/
-*.pyc
-config.ini
-*.real.py
+*.py[cod]
+*$py.class
+
+# Poetry
+.venv/
+dist/
+
+# IDE
+.vscode/
+.idea/
+
+# 환경 변수
+.env
+
+# 로그 파일
+*.log
+
+# 운영체제 관련 파일
+.DS_Store
+Thumbs.db
+
+# 테스트 관련
+.pytest_cache/
+.coverage
+
+# 빌드 관련
+build/
+*.egg-info/
+
+# 기타
+*.bak
+*.swp
+*.swo
+debug
+
+# ruff
+.ruff_cache/

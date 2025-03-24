@@ -1,14 +1,30 @@
 # Solapi SDK for Python
 
-[![Python 3.10.2](https://img.shields.io/badge/python-3.10.2-blue.svg)](https://www.python.org/downloads/release/python-3102/)
-![Python Supported version](https://img.shields.io/badge/python-%3E%3D3.7-orange)
+[![Python 3.9.21](https://img.shields.io/badge/python-3.9.21-blue.svg)](https://www.python.org/downloads)
+![Python Supported version](https://img.shields.io/badge/python-%3E%3D3.9-orange)
 
-### SOLAPI SDK 이용을 위해 아래 라이브러리 설치를 필요로 합니다.
 
-- requests
-- configparser
+You can send text messages(SMS, LMS, MMS), Kakao friendtalk(include notification friendtalk) in Korea using this package.
+This package is 100% compatible with SOLAPI family services (CoolSMS, Purplebook, etc.).
 
-### 예제 유형 별 참고사항
+Installing
+To use the SDK, simply use npm package manager CLI. Type the following into a terminal window.
 
-- 일반적인 사용예제는 examples/modules 폴더를 참고 해주세요.
-- python 인터프리터를 통해 한 파일 안에서 구동되는 예제들은 examples/scripts 폴더를 참고해주세요.
+```shell
+pip instal solapi
+```
+
+## Usage
+
+See [examples repository](https://github.com/solapi/solapi-python/tree/main/examples)
+
+## Opening Issues
+
+If you encounter a bug with the SOLAPI SDK for PHP we would like to hear about it.  
+Search the [existing issues](https://github.com/solapi/solapi-python/issues) and try to make sure your problem doesn’t
+already exist before opening a new issue, It’s helpful if you include the version of the SDK you are using.  
+Please include a stack trace and reduced repro case when appropriate, too.
+
+## License
+
+Licensed under the MIT License.

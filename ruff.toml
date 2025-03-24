@@ -1,0 +1,60 @@
+# 최대 줄 길이 설정
+line-length = 88
+# 들여쓰기 너비
+indent-width = 4
+# Python 버전 타겟 설정
+target-version = "py39"
+
+[lint]
+# 기본적으로 Pyflakes(F)와 pycodestyle(E)의 일부 규칙 활성화
+select = ["E4", "E7", "E9", "F"]
+# 추가로 많이 사용되는 규칙들
+extend-select = [
+    "B", # flake8-bugbear
+    "I", # isort
+    "UP", # pyupgrade
+    "N", # pep8-naming
+]
+# 무시할 규칙
+ignore = []
+# 언더스코어로 시작하는 변수는 미사용 변수로 간주하지 않음
+dummy-variable-rgx = "^(_+|(_+[a-zA-Z0-9_]*[a-zA-Z0-9]+?))$"
+
+exclude = [
+    ".bzr",
+    ".direnv",
+    ".eggs",
+    ".git",
+    ".git-rewrite",
+    ".hg",
+    ".ipynb_checkpoints",
+    ".mypy_cache",
+    ".nox",
+    ".pants.d",
+    ".pyenv",
+    ".pytest_cache",
+    ".pytype",
+    ".ruff_cache",
+    ".svn",
+    ".tox",
+    ".venv",
+    ".vscode",
+    "__pypackages__",
+    "_build",
+    "buck-out",
+    "build",
+    "dist",
+    "node_modules",
+    "site-packages",
+    "venv",
+]
+
+[format]
+# 문자열에 큰따옴표 사용
+quote-style = "double"
+# 들여쓰기에 스페이스 사용
+indent-style = "space"
+# 마법의 후행 쉼표 존중
+skip-magic-trailing-comma = false
+# 자동으로 적절한 줄 끝 감지
+line-ending = "auto"
