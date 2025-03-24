@@ -11,7 +11,7 @@ Installing
 To use the SDK, simply use npm package manager CLI. Type the following into a terminal window.
 
 ```shell
-pip instal solapi
+pip install solapi
 ```
 
 ## Usage
