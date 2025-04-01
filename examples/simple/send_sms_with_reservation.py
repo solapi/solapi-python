@@ -1,5 +1,7 @@
+from datetime import datetime
+
 from solapi import SolapiMessageService
-from solapi.model import Message
+from solapi.model import Message, SendRequestConfig
 
 # API 키와 API Secret을 설정합니다
 message_service = SolapiMessageService(
@@ -13,9 +15,14 @@ message = Message(
     text="안녕하세요! SOLAPI Python SDK를 사용한 SMS 발송 예제입니다.",
 )
 
+# 예약 발송을 위한 설정을 추가합니다
+request_config = SendRequestConfig(scheduled_date=datetime(2025, 4, 2, 13, 0, 0))
+# 혹은..
+# request_config = SendRequestConfig(scheduled_date="2025-04-02 13:00:00")
+
 # 메시지를 발송합니다
 try:
-    response = message_service.send(message)
+    response = message_service.send(message, request_config)
     print("메시지 발송 성공!")
     print(f"Group ID: {response.group_info.group_id}")
     print(f"요청한 메시지 개수: {response.group_info.count.total}")
