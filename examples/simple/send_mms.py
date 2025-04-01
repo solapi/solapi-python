@@ -1,4 +1,5 @@
 from os.path import abspath
+
 from solapi import SolapiMessageService
 from solapi.model import Message
 from solapi.model.request.storage import FileTypeEnum
@@ -33,9 +34,9 @@ try:
     # 메시지를 발송합니다
     response = message_service.send(message)
     print("\nMMS 발송 성공!")
-    print(f"Group ID: {response.group_id}")
+    print(f"Group ID: {response.group_info.group_id}")
     print(f"요청한 메시지 개수: {response.group_info.count.total}")
-    print(f"성공한 메시지 개수: {response.group_info.count.registered}")
+    print(f"성공한 메시지 개수: {response.group_info.count.registered_success}")
 
 except Exception as e:
     print(f"MMS 발송 실패: {str(e)}")
