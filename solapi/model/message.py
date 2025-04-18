@@ -1,6 +1,6 @@
 from datetime import datetime
 from enum import Enum
-from typing import Any, Optional
+from typing import Any, Optional, Union
 
 from pydantic import BaseModel, ConfigDict, Field
 from pydantic.alias_generators import to_camel
@@ -60,7 +60,7 @@ class Message(BaseModel):
     from_: Optional[str] = Field(
         default=None, serialization_alias="from", validation_alias="from"
     )
-    to: str
+    to: Union[str, list[str]]
     text: Optional[str] = None
     image_id: Optional[str] = Field(
         default=None, serialization_alias="imageId", validation_alias="imageId"
