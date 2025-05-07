@@ -1,6 +1,6 @@
 [project]
 name = "solapi"
-version = "5.0.0"
+version = "5.0.1"
 description = "SOLAPI SDK for Python"
 authors = [
     { name = "SOLAPI Team", email = "contact@solapi.com" }
@@ -27,12 +27,13 @@ readme = "README.md"
 requires-python = ">=3.9"
 dependencies = [
     "httpx (>=0.28.1,<0.29.0)",
-    "pydantic (>=2.10.6,<3.0.0)"
+    "pydantic (>=2.11.4,<3.0.0)"
 ]
 
 [project.optional-dependencies]
 dev = [
-    "ruff>=0.11.0"
+    "ruff>=0.11.0",
+    "pytest>=7.0.0"
 ]
 
 [build-system]

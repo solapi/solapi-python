@@ -5,7 +5,7 @@ from pydantic import BaseModel, ConfigDict, Field, computed_field
 from pydantic.alias_generators import to_camel
 
 from solapi.lib.string_date_transfer import format_with_transfer
-from solapi.model.message import MessageType
+from solapi.model.message_type import MessageType
 
 
 class GetMessagesRequest(BaseModel):
