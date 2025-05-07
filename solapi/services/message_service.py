@@ -8,12 +8,12 @@ from solapi.error.MessageNotReceiveError import MessageNotReceivedError
 from solapi.lib.authenticator import AuthenticationParameter
 from solapi.lib.fetcher import RequestMethod, default_fetcher
 from solapi.lib.string_date_transfer import format_with_transfer
-from solapi.model.message import Message
 from solapi.model.request.groups.get_groups import (
     GetGroupsCrteriaType,
     GetGroupsFinalizeRequest,
     GetGroupsRequest,
 )
+from solapi.model.request.message import Message as RequestMessage
 from solapi.model.request.messages.get_messages import GetMessagesRequest
 from solapi.model.request.send_message_request import (
     SendMessageRequest,
@@ -33,7 +33,7 @@ class SolapiMessageService:
     """Solapi Message Service for handling message-related operations.
 
     This class provides methods to interact with the Solapi API for sending various types of messages
-    (SMS, LMS, MMS, 알림톡, 친구톡, RCS, etc.), managing message groups, uploading files, 
+    (SMS, LMS, MMS, 알림톡, 친구톡, RCS, etc.), managing message groups, uploading files,
     and checking account balance.
     """
 
@@ -52,7 +52,7 @@ class SolapiMessageService:
 
     def send(
         self,
-        messages: Union[list[Message], Message],
+        messages: Union[list[RequestMessage], RequestMessage],
         request_config: Optional[SendRequestConfig] = None,
     ) -> SendMessageResponse:
         """Send one or more messages using the Solapi API.
@@ -61,11 +61,11 @@ class SolapiMessageService:
         It supports sending a single message or multiple messages in one request (대량 발송).
 
         Args:
-            messages: A single Message object or a list of Message objects to send.
-                      Each Message object contains recipient (수신번호), sender (발신번호), content (내용), 
+            messages: A single RequestMessage object or a list of RequestMessage objects to send.
+                      Each RequestMessage object contains recipient (수신번호), sender (발신번호), content (내용),
                       and other message details.
             request_config: Optional configuration for the send request.
-                           Can include app_id, allow_duplicates (중복 수신번호 허용), 
+                           Can include app_id, allow_duplicates (중복 수신번호 허용),
                            scheduled_date (예약 발송), and other settings.
 
         Returns:
@@ -73,18 +73,18 @@ class SolapiMessageService:
                                and other details about the sent messages.
 
         Raises:
-            TypeError: If messages parameter is not a Message object or list of Message objects.
+            TypeError: If messages parameter is not a RequestMessage object or list of RequestMessage objects.
             ValueError: If no valid messages are provided.
             MessageNotReceivedError: If all messages failed to be registered.
         """
         payload = []
-        if isinstance(messages, Message):
+        if isinstance(messages, RequestMessage):
             payload.append(messages)
         elif isinstance(messages, list):
             for message in messages:
-                if isinstance(message, Message) is not True:
+                if isinstance(message, RequestMessage) is not True:
                     raise TypeError(
-                        "The messages parameter must be an instance of Message."
+                        "The messages parameter must be an instance of RequestMessage."
                     )
 
             payload.extend(messages)
@@ -258,7 +258,7 @@ class SolapiMessageService:
 
         Args:
             query: Optional query parameters to filter the messages.
-                  Can include criteria for message status (상태), date range (기간), 
+                  Can include criteria for message status (상태), date range (기간),
                   recipient (수신번호), sender (발신번호), etc.
 
         Returns:

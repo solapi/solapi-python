@@ -1,6 +1,6 @@
 from datetime import datetime
 from enum import Enum
-from typing import Optional
+from typing import Any, Optional
 
 from pydantic import BaseModel, ConfigDict
 from pydantic.alias_generators import to_camel
@@ -82,7 +82,8 @@ class RcsOption(BaseModel):
     mms_type: Optional[RcsMmsType] = None
     commercial_type: Optional[bool] = None
     disable_sms: Optional[bool] = False
-    additional_body: Optional[list[RcsAdditionalBody]] = None
+    additional_body: Optional[Any] = None
+    # additional_body: Optional[list[RcsAdditionalBody]] = None
     buttons: Optional[list[RcsButton]] = None
 
     model_config = ConfigDict(alias_generator=to_camel, populate_by_name=True)

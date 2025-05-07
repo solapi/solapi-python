@@ -1,7 +1,7 @@
 from os.path import abspath
 
 from solapi import SolapiMessageService
-from solapi.model import Message
+from solapi.model import RequestMessage
 from solapi.model.request.storage import FileTypeEnum
 
 # API 키와 API Secret을 설정합니다
@@ -23,7 +23,7 @@ try:
     print(f"File ID: {file_response.file_id}")
 
     # MMS 메시지를 생성하고 발송합니다
-    message = Message(
+    message = RequestMessage(
         from_="발신번호",  # 발신번호 (등록된 발신번호만 사용 가능)
         to="수신번호",  # 수신번호
         # subject="MMS 제목", # MMS 제목, 제목을 지정하지 않는다면 필요하지 않습니다.

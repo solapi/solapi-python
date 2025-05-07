@@ -1,5 +1,5 @@
 from solapi import SolapiMessageService
-from solapi.model import Message
+from solapi.model import RequestMessage
 
 # API 키와 API Secret을 설정합니다
 message_service = SolapiMessageService(
@@ -7,7 +7,7 @@ message_service = SolapiMessageService(
 )
 
 # 단일 메시지를 생성합니다
-message = Message(
+message = RequestMessage(
     from_="발신번호",  # 발신번호 (등록된 발신번호만 사용 가능)
     to="수신번호",  # 수신번호
     text="안녕하세요! SOLAPI Python SDK를 사용한 SMS 발송 예제입니다.",

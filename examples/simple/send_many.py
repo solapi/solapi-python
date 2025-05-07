@@ -1,5 +1,5 @@
 from solapi import SolapiMessageService
-from solapi.model import Message, SendRequestConfig
+from solapi.model import RequestMessage, SendRequestConfig
 
 # API 키와 API Secret을 설정합니다
 message_service = SolapiMessageService(
@@ -8,9 +8,9 @@ message_service = SolapiMessageService(
 
 # 여러 메시지를 생성합니다
 messages = [
-    Message(from_="발신번호", to="수신번호1", text="첫 번째 메시지입니다."),
-    Message(from_="발신번호", to="수신번호2", text="두 번째 메시지입니다."),
-    Message(from_="발신번호", to="수신번호3", text="세 번째 메시지입니다."),
+    RequestMessage(from_="발신번호", to="수신번호1", text="첫 번째 메시지입니다."),
+    RequestMessage(from_="발신번호", to="수신번호2", text="두 번째 메시지입니다."),
+    RequestMessage(from_="발신번호", to="수신번호3", text="세 번째 메시지입니다."),
 ]
 
 # SendRequestConfig를 사용하여 중복 수신번호 허용 설정

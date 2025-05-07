@@ -1,10 +1,10 @@
+from collections.abc import Mapping
 from typing import Optional
 
-from pydantic import BaseModel, ConfigDict
+from pydantic import BaseModel, ConfigDict, field_validator
 from pydantic.alias_generators import to_camel
 
 
-# TODO: Request, Response용 모델을 별도로 분리해야 함
 class KakaoOption(BaseModel):
     pf_id: Optional[str] = None
     template_id: Optional[str] = None
@@ -13,3 +13,10 @@ class KakaoOption(BaseModel):
     image_id: Optional[str] = None
 
     model_config = ConfigDict(alias_generator=to_camel, populate_by_name=True)
+
+    @field_validator("variables", mode="before")
+    @classmethod
+    def stringify_values(cls, v: Mapping[str, object]):
+        if isinstance(v, Mapping):
+            # 모든 value를 str로 캐스팅
+            return {k: str(val) for k, val in v.items()}
