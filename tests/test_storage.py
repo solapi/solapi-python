@@ -47,7 +47,7 @@ class TestStorage:
         print(f"File name: {response.name}")
         print(f"File created: {response.date_created}")
 
-        return response.file_id
+        assert response.file_id is not None
 
     def test_upload_file_kakao(self, message_service):
         """
@@ -87,14 +87,14 @@ class TestStorage:
         print(f"File name: {response.name}")
         print(f"File created: {response.date_created}")
 
-        return response.file_id
+        assert response.file_id is not None
 
-    def test_upload_file_document(self, message_service):
+    def test_upload_file_fax(self, message_service):
         """
-        Test uploading a file as a document.
+        Test uploading a file as a fax.
 
         This test verifies that the upload_file method returns a valid response
-        when uploading a file as a document.
+        when uploading a file as a fax.
 
         Args:
             message_service: The SolapiMessageService fixture
@@ -111,7 +111,7 @@ class TestStorage:
         # Upload file
         response = message_service.upload_file(
             file_path=str(image_path),
-            upload_type=FileTypeEnum.DOCUMENT,
+            upload_type=FileTypeEnum.FAX,
         )
 
         # Verify response type
@@ -127,4 +127,4 @@ class TestStorage:
         print(f"File name: {response.name}")
         print(f"File created: {response.date_created}")
 
-        return response.file_id
+        assert response.file_id is not None

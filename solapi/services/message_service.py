@@ -88,8 +88,6 @@ class SolapiMessageService:
                     )
 
             payload.extend(messages)
-        else:
-            raise TypeError("Invalid message type")
 
         if len(payload) == 0:
             raise ValueError("The data must have at least one message.")
@@ -167,6 +165,21 @@ class SolapiMessageService:
             data=request,
         )
         return FileUploadResponse.model_validate(response)
+
+    def cancel_scheduled_message(self, group_id: str) -> GroupMessageResponse:
+        """Cancel a reserved message.
+
+        This method cancels a message that was previously scheduled to be sent.
+        It requires the group_id of the message to be canceled.
+        """
+        response = default_fetcher(
+            self.auth_info,
+            request={
+                "url": f"{self.base_url}/messages/v4/groups/{group_id}/schedule",
+                "method": RequestMethod.DELETE,
+            },
+        )
+        return GroupMessageResponse.model_validate(response)
 
     def get_groups(self, query: Optional[GetGroupsRequest] = None) -> GetGroupsResponse:
         """Retrieve message groups (메시지 그룹) from the Solapi API.

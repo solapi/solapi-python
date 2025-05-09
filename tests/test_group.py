@@ -2,12 +2,13 @@ import pytest
 
 from solapi.model.response.groups.get_group_messages import GetGroupMessagesResponse
 from solapi.model.response.groups.get_groups import GetGroupsResponse
+from solapi.services.message_service import SolapiMessageService
 
 
 class TestGroup:
     """Test cases for group-related functionality."""
 
-    def test_get_groups(self, message_service):
+    def test_get_groups(self, message_service: SolapiMessageService):
         """
         Test getting message groups.
 
@@ -41,7 +42,7 @@ class TestGroup:
             # Test get_group method with this group ID
             self.test_get_group(message_service, group_id)
 
-    def test_get_group(self, message_service, group_id=None):
+    def test_get_group(self, message_service: SolapiMessageService, group_id=None):
         """
         Test getting a specific message group.
 
@@ -92,15 +93,15 @@ class TestGroup:
         assert isinstance(response, GetGroupMessagesResponse)
 
         # Verify response has required fields
-        assert hasattr(response, "messages")
+        assert hasattr(response, "message_list")
 
         # Print message information for verification
-        print(f"Number of messages in group: {len(response.messages)}")
+        print(f"Number of messages in group: {len(response.message_list)}")
 
         # If there are messages, verify the structure of the first message
-        if response.messages:
-            message = response.messages[0]
-            print(f"Message ID: {message.message_id}")
-            print(f"Status: {message.status}")
-            print(f"To: {message.to}")
-            print(f"From: {message.from_}")
+        if response.message_list:
+            for message in response.message_list.values():
+                print(f"Message ID: {message.message_id}")
+                print(f"Status: {message.status_code}")
+                print(f"To: {message.to}")
+                print(f"From: {message.from_}")

@@ -1,6 +1,6 @@
 from datetime import datetime
 from enum import Enum
-from typing import Any, Optional
+from typing import Optional
 
 from pydantic import BaseModel, ConfigDict
 from pydantic.alias_generators import to_camel
@@ -25,15 +25,6 @@ class RcsMmsType(str, Enum):
 
     def __repr__(self):
         return repr(self.value)
-
-
-class RcsAdditionalBody(BaseModel):
-    title: str
-    description: str
-    image_id: Optional[str] = None
-    buttons: Optional[dict[str, str]] = None
-
-    model_config = ConfigDict(alias_generator=to_camel, populate_by_name=True)
 
 
 class RcsButtonType(str, Enum):
@@ -74,6 +65,15 @@ class RcsButton(BaseModel):
     model_config = ConfigDict(alias_generator=to_camel, populate_by_name=True)
 
 
+class RcsAdditionalBody(BaseModel):
+    title: str
+    description: str
+    image_id: Optional[str] = None
+    buttons: Optional[list[RcsButton]] = None
+
+    model_config = ConfigDict(alias_generator=to_camel, populate_by_name=True)
+
+
 class RcsOption(BaseModel):
     brand_id: Optional[str] = None
     template_id: Optional[str] = None
@@ -82,8 +82,7 @@ class RcsOption(BaseModel):
     mms_type: Optional[RcsMmsType] = None
     commercial_type: Optional[bool] = None
     disable_sms: Optional[bool] = False
-    additional_body: Optional[Any] = None
-    # additional_body: Optional[list[RcsAdditionalBody]] = None
+    additional_body: Optional[list[RcsAdditionalBody]] = None
     buttons: Optional[list[RcsButton]] = None
 
     model_config = ConfigDict(alias_generator=to_camel, populate_by_name=True)

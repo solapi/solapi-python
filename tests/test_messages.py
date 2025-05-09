@@ -24,20 +24,18 @@ class TestMessages:
         assert isinstance(response, GetMessagesResponse)
 
         # Verify response has required fields
-        assert hasattr(response, "messages")
-        assert hasattr(response, "total_count")
+        assert hasattr(response, "message_list")
 
         # Print message information for verification
-        print(f"Total messages: {response.total_count}")
-        print(f"Messages in response: {len(response.messages)}")
+        print(f"Messages in response: {len(response.message_list)}")
 
         # If there are messages, verify the structure of the first message
-        if response.messages:
-            message = response.messages[0]
-            print(f"Message ID: {message.message_id}")
-            print(f"Status: {message.status}")
-            print(f"To: {message.to}")
-            print(f"From: {message.from_}")
+        if response.message_list:
+            for message in response.message_list.values():
+                print(f"Message ID: {message.message_id}")
+                print(f"Status: {message.status_code}")
+                print(f"To: {message.to}")
+                print(f"From: {message.from_}")
 
     def test_get_messages_with_date_filter(self, message_service):
         """
@@ -67,20 +65,15 @@ class TestMessages:
         assert isinstance(response, GetMessagesResponse)
 
         # Verify response has required fields
-        assert hasattr(response, "messages")
-        assert hasattr(response, "total_count")
+        assert hasattr(response, "message_list")
 
         # Print message information for verification
-        print(
-            f"Total messages in date range {start_date_str} to {end_date_str}: {response.total_count}"
-        )
-        print(f"Messages in response: {len(response.messages)}")
+        print(f"Messages in response: {len(response.message_list)}")
 
         # If there are messages, verify the structure of the first message
-        if response.messages:
-            message = response.messages[0]
-            print(f"Message ID: {message.message_id}")
-            print(f"Status: {message.status}")
-            print(f"To: {message.to}")
-            print(f"From: {message.from_}")
-            print(f"Date: {message.date_created}")
+        if response.message_list:
+            for message in response.message_list.values():
+                print(f"Message ID: {message.message_id}")
+                print(f"Status: {message.status_code}")
+                print(f"To: {message.to}")
+                print(f"From: {message.from_}")

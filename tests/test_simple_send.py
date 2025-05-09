@@ -7,6 +7,7 @@ from solapi.model import RequestMessage, SendRequestConfig
 from solapi.model.kakao.kakao_option import KakaoOption
 from solapi.model.request.storage import FileTypeEnum
 from solapi.model.response.send_message_response import SendMessageResponse
+from solapi.services.message_service import SolapiMessageService
 
 
 class TestSimpleSend:
@@ -51,7 +52,7 @@ class TestSimpleSend:
         print(f"Successful messages: {response.group_info.count.registered_success}")
         print(f"Failed messages: {response.group_info.count.registered_failed}")
 
-        return response.group_info.group_id
+        assert response.group_info.group_id is not None
 
     def test_send_mms(self, message_service, test_phone_numbers):
         """
@@ -113,7 +114,7 @@ class TestSimpleSend:
         print(f"Successful messages: {response.group_info.count.registered_success}")
         print(f"Failed messages: {response.group_info.count.registered_failed}")
 
-        return response.group_info.group_id
+        assert response.group_info.group_id is not None
 
     def test_send_kakao_alimtalk(
         self, message_service, test_phone_numbers, test_kakao_options
@@ -166,7 +167,7 @@ class TestSimpleSend:
             )
             print(f"Failed messages: {response.group_info.count.registered_failed}")
 
-            return response.group_info.group_id
+            assert response.group_info.group_id is not None
         except Exception as e:
             # This test may fail if Kakao template is not properly set up
             pytest.skip(f"Kakao Alimtalk test skipped: {str(e)}")
@@ -232,7 +233,7 @@ class TestSimpleSend:
                 print(f"To: {failed.message.to}")
                 print(f"Error: {failed.error.message}")
 
-        return response.group_info.group_id
+        assert response.group_info.group_id is not None
 
     def test_send_with_reservation(self, message_service, test_phone_numbers):
         """
@@ -250,14 +251,11 @@ class TestSimpleSend:
             from_=test_phone_numbers["sender"],
             to=test_phone_numbers["recipient"],
             text="[테스트] SOLAPI Python SDK를 사용한 예약 발송 테스트입니다.",
+            scheduled_date=datetime.now() + timedelta(minutes=10),
         )
 
-        # Create config with scheduled date (10 minutes in the future)
-        scheduled_date = datetime.now() + timedelta(minutes=10)
-        config = SendRequestConfig(scheduled_date=scheduled_date)
-
-        # Send message with reservation
-        response = message_service.send(message, config)
+        # Send message
+        response = message_service.send(message)
 
         # Verify response type
         assert isinstance(response, SendMessageResponse)
@@ -267,15 +265,50 @@ class TestSimpleSend:
         assert hasattr(response.group_info, "group_id")
         assert hasattr(response.group_info, "count")
 
-        # Verify message was scheduled successfully
+        # Verify message was sent successfully
         assert response.group_info.count.total > 0
         assert response.group_info.count.registered_success > 0
 
         # Print response information for verification
         print(f"Group ID: {response.group_info.group_id}")
-        print(f"Scheduled date: {scheduled_date}")
         print(f"Total messages: {response.group_info.count.total}")
         print(f"Successful messages: {response.group_info.count.registered_success}")
         print(f"Failed messages: {response.group_info.count.registered_failed}")
 
-        return response.group_info.group_id
+        assert response.group_info.group_id is not None
+
+    def test_cancel_reservation(
+        self, message_service: SolapiMessageService, test_phone_numbers
+    ):
+        """
+        Test cancelling a reserved message.
+
+        This test verifies that the cancel_scheduled_message method works correctly.
+
+        Args:
+            message_service: The SolapiMessageService fixture
+            test_phone_numbers: Dictionary with sender and recipient phone numbers
+        """
+        # Create message with reservation
+        message = RequestMessage(
+            from_=test_phone_numbers["sender"],
+            to=test_phone_numbers["recipient"],
+            text="[테스트] SOLAPI Python SDK 예약 취소 테스트입니다.",
+        )
+        request_config = SendRequestConfig(
+            scheduled_date=datetime.now() + timedelta(minutes=10)
+        )
+
+        # Send message and get group_id
+        send_response = message_service.send(message, request_config)
+        group_id = send_response.group_info.group_id
+
+        # Cancel reservation
+        cancel_response = message_service.cancel_scheduled_message(group_id)
+
+        # Verify cancellation response
+        assert cancel_response.group_id is not None
+
+        # Print cancellation information for verification
+        # print(f"Cancellation status: {cancel_response.status}")
+        print(f"Cancelled message ID: {cancel_response.group_id}")
