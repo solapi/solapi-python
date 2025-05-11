@@ -1,0 +1,10 @@
+[project]
+name = "django_example"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.9"
+dependencies = [
+    "django>=4.2.21",
+    "solapi>=5.0.0",
+]

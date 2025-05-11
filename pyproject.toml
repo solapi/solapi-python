@@ -42,3 +42,6 @@ build-backend = "hatchling.build"
 
 [tool.hatch.build]
 packages = ["solapi"]
+
+[tool.uv.workspace]
+members = ["examples/webhook/django-example"]
