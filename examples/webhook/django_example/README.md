@@ -17,4 +17,4 @@ uv sync
 uv run manage.py runserver
 ```
 
-이후 `POST http://localhost:8080/webhook/single-report` 혹은 `POST http://localhost:8080/webhook/group-report`를 통해 웹훅 데이터를 수신받아서 테스트해볼 수 있습니다.
+이후에는 `POST http://localhost:8080/webhook/single-report` 또는 `POST http://localhost:8080/webhook/group-report`로 웹훅 데이터를 수신하여 테스트해 볼 수 있습니다.
