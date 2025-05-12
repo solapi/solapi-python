@@ -30,47 +30,47 @@ class CommonCashResponse(BaseModel):
 
 
 class CommonPriceTypeResponse(BaseModel):
-    sms: dict[str, float]
-    lms: dict[str, float]
-    mms: dict[str, float]
-    ata: dict[str, float]
-    cta: dict[str, float]
-    cti: dict[str, float]
-    nsa: dict[str, float]
-    rcs_sms: dict[str, float]
-    rcs_lms: dict[str, float]
-    rcs_mms: dict[str, float]
-    rcs_tpl: dict[str, float]
-    rcs_itpl: dict[str, float]
-    rcs_ltpl: dict[str, float]
-    fax: dict[str, float]
-    voice: dict[str, float]
+    sms: Optional[dict[str, float]] = None
+    lms: Optional[dict[str, float]] = None
+    mms: Optional[dict[str, float]] = None
+    ata: Optional[dict[str, float]] = None
+    cta: Optional[dict[str, float]] = None
+    cti: Optional[dict[str, float]] = None
+    nsa: Optional[dict[str, float]] = None
+    rcs_sms: Optional[dict[str, float]] = None
+    rcs_lms: Optional[dict[str, float]] = None
+    rcs_mms: Optional[dict[str, float]] = None
+    rcs_tpl: Optional[dict[str, float]] = None
+    rcs_itpl: Optional[dict[str, float]] = None
+    rcs_ltpl: Optional[dict[str, float]] = None
+    fax: Optional[dict[str, float]] = None
+    voice: Optional[dict[str, float]] = None
 
     model_config = ConfigDict(extra="ignore")
 
 
 class EachTypePriceResponse(BaseModel):
-    sms: float
-    lms: float
-    mms: float
-    ata: float
-    cta: float
-    cti: float
-    nsa: float
-    rcs_sms: float
-    rcs_lms: float
-    rcs_mms: float
-    rcs_tpl: float
-    rcs_itpl: float
-    rcs_ltpl: float
-    fax: float
-    voice: float
+    sms: Optional[float] = None
+    lms: Optional[float] = None
+    mms: Optional[float] = None
+    ata: Optional[float] = None
+    cta: Optional[float] = None
+    cti: Optional[float] = None
+    nsa: Optional[float] = None
+    rcs_sms: Optional[float] = None
+    rcs_lms: Optional[float] = None
+    rcs_mms: Optional[float] = None
+    rcs_tpl: Optional[float] = None
+    rcs_itpl: Optional[float] = None
+    rcs_ltpl: Optional[float] = None
+    fax: Optional[float] = None
+    voice: Optional[float] = None
 
     model_config = ConfigDict(extra="ignore")
 
 
 class AppResponse(BaseModel):
-    profit: EachTypePriceResponse
+    profit: Optional[EachTypePriceResponse] = None
     app_id: Optional[str] = None
 
     model_config = ConfigDict(

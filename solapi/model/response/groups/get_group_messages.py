@@ -3,7 +3,7 @@ from typing import Optional
 from pydantic import BaseModel, ConfigDict
 from pydantic.alias_generators import to_camel
 
-from solapi.model import Message
+from solapi.model.response.message import Message
 
 
 class GetGroupMessagesResponse(BaseModel):

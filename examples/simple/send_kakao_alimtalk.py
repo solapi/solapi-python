@@ -1,5 +1,5 @@
 from solapi import SolapiMessageService
-from solapi.model import Message
+from solapi.model import RequestMessage
 from solapi.model.kakao.kakao_option import KakaoOption
 
 # API 키와 API Secret을 설정합니다
@@ -20,7 +20,7 @@ kakao_option = KakaoOption(
 )
 
 # 단일 메시지를 생성합니다
-message = Message(
+message = RequestMessage(
     from_="발신번호",  # 발신번호 (등록된 발신번호만 사용 가능)
     to="수신번호",  # 수신번호
     kakao_options=kakao_option,

@@ -1,4 +1,5 @@
 from solapi import SolapiMessageService
+
 # from solapi.model.request.messages.get_messages import GetMessagesRequest
 
 message_service = SolapiMessageService(

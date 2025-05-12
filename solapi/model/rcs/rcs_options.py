@@ -27,15 +27,6 @@ class RcsMmsType(str, Enum):
         return repr(self.value)
 
 
-class RcsAdditionalBody(BaseModel):
-    title: str
-    description: str
-    image_id: Optional[str] = None
-    buttons: Optional[dict[str, str]] = None
-
-    model_config = ConfigDict(alias_generator=to_camel, populate_by_name=True)
-
-
 class RcsButtonType(str, Enum):
     """
     'WL'(웹링크), 'ML'(지도[좌표]), 'MQ'(지도[쿼리]), 'MR'(위치공유),
@@ -70,6 +61,15 @@ class RcsButton(BaseModel):
     end_time: Optional[datetime] = None
     text: Optional[str] = None
     phone: Optional[str] = None
+
+    model_config = ConfigDict(alias_generator=to_camel, populate_by_name=True)
+
+
+class RcsAdditionalBody(BaseModel):
+    title: str
+    description: str
+    image_id: Optional[str] = None
+    buttons: Optional[list[RcsButton]] = None
 
     model_config = ConfigDict(alias_generator=to_camel, populate_by_name=True)
 

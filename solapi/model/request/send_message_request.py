@@ -5,8 +5,8 @@ from typing import Optional, Union
 from pydantic import BaseModel, ConfigDict
 from pydantic.alias_generators import to_camel
 
-from solapi.model.message import Message
 from solapi.model.request import VERSION
+from solapi.model.request.message import Message
 
 
 class SendRequestConfig(BaseModel):

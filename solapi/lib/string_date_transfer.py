@@ -80,9 +80,15 @@ def string_date_transfer(value: Union[str, datetime]):
     if isinstance(value, str):
         try:
             value = parse_iso(value)
-        except Exception as e:
-            raise InvalidDateError("Invalid Date") from e
-
+        except InvalidDateError:  # parse_iso가 실패한 경우
+            try:
+                # "YYYY-MM-DD HH:MM:SS" 형식 시도
+                value = datetime.strptime(value, "%Y-%m-%d %H:%M:%S")
+            except ValueError as e:
+                # 두 형식 모두 실패한 경우 원래 에러 발생
+                raise InvalidDateError(
+                    "Invalid Date format. Expected ISO 8601 or YYYY-MM-DD HH:MM:SS"
+                ) from e
     return value
 
 
