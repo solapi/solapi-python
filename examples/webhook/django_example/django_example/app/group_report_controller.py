@@ -35,6 +35,7 @@ class GroupReportWebhookController(View):
         # 또는..
         print(group_report.data.log)
 
+        # 200을 리턴해야 합니다. (200이 리턴되지 않으면 특정 시간 간격을 두고 총 5번이 호출됩니다)
         return JsonResponse(group_report.model_dump(), status=200)
 
     def options(self, request, *args, **kwargs):
