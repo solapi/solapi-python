@@ -5,13 +5,13 @@ from django.utils.decorators import method_decorator
 from django.views import View
 from django.views.decorators.csrf import csrf_exempt
 
-from solapi.model.response.send_message_response import SendMessageResponse
+from solapi.model.webhook.group_report import GroupReportPayload
 
 
 @method_decorator(csrf_exempt, name="dispatch")
-class WebhookController(View):
+class GroupReportWebhookController(View):
     """
-    POST 로만 받는 웹훅 엔드포인트
+    POST 로만 받는 그룹 리포트(Group Report) 웹훅 엔드포인트
     CSRF 예외 처리(@csrf_exempt) 를 걸어야 외부에서 POST 요청이 들어올 때 403 에러가 나지 않습니다.
     """
 
@@ -23,9 +23,19 @@ class WebhookController(View):
         except json.JSONDecodeError:
             return JsonResponse({"error": "invalid JSON"}, status=400)
 
-        message_response = SendMessageResponse.model_validate(payload)
+        message_response = GroupReportPayload.model_validate(payload)
+        group_report = message_response.root[0]
 
-        return JsonResponse(message_response.model_dump_json(), status=200)
+        # 이후 필요한 프로그래밍 처리.. 아래 방식처럼 데이터를 추출해서 사용할 수 있습니다.
+        print(group_report.data.group_id)
+
+        # 혹은..
+        print(group_report.data.date_created)
+
+        # 또는..
+        print(group_report.data.log)
+
+        return JsonResponse(group_report.model_dump(), status=200)
 
     def options(self, request, *args, **kwargs):
         response = JsonResponse({"status": "options OK"})

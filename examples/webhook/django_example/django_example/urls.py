@@ -18,11 +18,15 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
-from .app.example_controller import (
-    WebhookController,
+from .app.group_report_controller import (
+    GroupReportWebhookController,
+)
+from .app.single_report_controller import (
+    SingleReportWebhookController,
 )
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("webhook", WebhookController.as_view(), name="webhook"),
+    path("webhook/single-report", SingleReportWebhookController.as_view()),
+    path("webhook/group-report", GroupReportWebhookController.as_view()),
 ]

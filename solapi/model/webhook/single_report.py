@@ -1,48 +1,14 @@
-from typing import Any, Optional
+from typing import Optional
 
-from pydantic import BaseModel, ConfigDict, Field
+from pydantic import BaseModel, ConfigDict, Field, RootModel
 from pydantic.alias_generators import to_camel
 
 from solapi.model.kakao.kakao_option import KakaoOption
+from solapi.model.naver.naver_option import NaverOption
 from solapi.model.rcs.rcs_options import RcsOption
 
 
-class KakaoButton(BaseModel):
-    button_name: Optional[str] = None
-    button_type: Optional[str] = None
-    link_mo: Optional[str] = None
-    link_pc: Optional[str] = None
-    model_config = ConfigDict(populate_by_name=True, alias_generator=to_camel)
-
-
-class KakaoItemDetail(BaseModel):
-    title: Optional[str] = None
-    description: Optional[str] = None
-    model_config = ConfigDict(populate_by_name=True, alias_generator=to_camel)
-
-
-class KakaoItem(BaseModel):
-    list_: Optional[list[Any]] = None  # JSON field "list"
-    summary: Optional[KakaoItemDetail] = None
-    model_config = ConfigDict(populate_by_name=True, alias_generator=to_camel)
-
-
-class KakaoHighlight(BaseModel):
-    title: Optional[str] = None
-    description: Optional[str] = None
-    image_id: Optional[str] = None
-    model_config = ConfigDict(populate_by_name=True, alias_generator=to_camel)
-
-
-class NaverOption(BaseModel):
-    talk_id: Optional[str] = None
-    template_id: Optional[str] = None
-    disable_sms: Optional[bool] = None
-    buttons: Optional[list[Any]] = None
-    model_config = ConfigDict(populate_by_name=True, alias_generator=to_camel)
-
-
-class ReportData(BaseModel):
+class SingleReportData(BaseModel):
     message_id: Optional[str] = Field(
         default=None, validation_alias="messageId", serialization_alias="messageId"
     )
@@ -101,10 +67,14 @@ class ReportData(BaseModel):
 
 
 class SingleReport(BaseModel):
-    event_data_id: Optional[str] = None
-    data: Optional[ReportData] = None
+    event_data_id: str = None
+    data: SingleReportData
     retry_count: Optional[int] = None
 
     model_config = ConfigDict(
         populate_by_name=True, alias_generator=to_camel, extra="ignore"
     )
+
+
+class SingleReportPayload(RootModel[list[SingleReport]]):
+    pass
