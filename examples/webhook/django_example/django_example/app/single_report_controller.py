@@ -35,6 +35,7 @@ class SingleReportWebhookController(View):
         # 또는..
         print(single_report.data.naver_options)
 
+        # 200을 리턴해야 합니다. (200이 리턴되지 않으면 특정 시간 간격을 두고 총 5번이 호출됩니다)
         return JsonResponse(single_report.model_dump(), status=200)
 
     def options(self, request, *args, **kwargs):
