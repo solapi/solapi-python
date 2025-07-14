@@ -1,6 +1,6 @@
 [project]
 name = "solapi"
-version = "5.0.1"
+version = "5.0.2"
 description = "SOLAPI SDK for Python"
 authors = [
     { name = "SOLAPI Team", email = "contact@solapi.com" }

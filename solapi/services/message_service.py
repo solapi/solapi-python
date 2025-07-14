@@ -9,7 +9,7 @@ from solapi.lib.authenticator import AuthenticationParameter
 from solapi.lib.fetcher import RequestMethod, default_fetcher
 from solapi.lib.string_date_transfer import format_with_transfer
 from solapi.model.request.groups.get_groups import (
-    GetGroupsCrteriaType,
+    GetGroupsCriteriaType,
     GetGroupsFinalizeRequest,
     GetGroupsRequest,
 )
@@ -200,7 +200,7 @@ class SolapiMessageService:
         if query is not None:
             request = request.model_copy(update=query.model_dump(exclude_unset=True))
             if query.group_id is not None and query.group_id != "":
-                request.criteria = GetGroupsCrteriaType.group_id
+                request.criteria = GetGroupsCriteriaType.group_id
                 request.cond = "eq"
                 request.value = query.group_id
 

@@ -27,7 +27,14 @@ def format_iso(date: datetime) -> str:
     """
     utc_offset_sec = time.altzone if time.localtime().tm_isdst else time.timezone
     utc_offset = timedelta(seconds=-utc_offset_sec)
-    return date.replace(tzinfo=timezone(offset=utc_offset)).isoformat()
+    local_tz = timezone(offset=utc_offset)
+
+    if date.tzinfo is None:
+        date = date.replace(tzinfo=local_tz)
+    else:
+        date = date.astimezone(local_tz)
+
+    return date.isoformat()
 
 
 def parse_iso(date_string: str) -> datetime:
