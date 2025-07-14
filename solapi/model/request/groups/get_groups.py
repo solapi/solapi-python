@@ -16,7 +16,7 @@ class GetGroupsRequest(BaseModel):
     model_config = ConfigDict(alias_generator=to_camel, populate_by_name=True)
 
 
-class GetGroupsCrteriaType(str, Enum):
+class GetGroupsCriteriaType(str, Enum):
     group_id = "groupId"
     date_created = "dateCreated"
     scheduled_date = "scheduledDate"

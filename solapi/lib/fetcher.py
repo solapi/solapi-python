@@ -39,11 +39,17 @@ def default_fetcher(
     headers = {
         "Authorization": authorization_header_data,
         "Content-Type": "application/json",
+        "Connection": "keep-alive",
     }
 
-    with httpx.Client() as client:
+    transport = httpx.HTTPTransport(retries=3)
+
+    with httpx.Client(transport=transport) as client:
         response: Response = client.request(
-            method=request["method"], url=request["url"], headers=headers, json=data
+            method=request["method"],
+            url=request["url"],
+            headers=headers,
+            json=data,
         )
 
     # 4xx 에러 처리: 클라이언트 오류일 경우

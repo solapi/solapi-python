@@ -1,11 +1,12 @@
 from typing import Any, Optional, Union
 
-from pydantic import BaseModel, ConfigDict, Field
+from pydantic import BaseModel, ConfigDict, Field, field_validator
 from pydantic.alias_generators import to_camel
 
 from solapi.model import KakaoOption
 from solapi.model.message_type import MessageType
 from solapi.model.rcs.rcs_options import RcsOption
+from solapi.model.request.voice.voice_option import VoiceOption
 
 
 class FileIdsType(BaseModel):
@@ -52,6 +53,29 @@ class Message(BaseModel):
     fax_options: Optional[FileIdsType] = Field(
         default=None, serialization_alias="faxOptions", validation_alias="faxOptions"
     )
+    voice_options: Optional[VoiceOption] = Field(
+        default=None,
+        serialization_alias="voiceOptions",
+        validation_alias="voiceOptions",
+    )
+
+    @field_validator("from_", mode="before")
+    @classmethod
+    def normalize_from_phone_number(cls, v: Optional[str]) -> Optional[str]:
+        if v is None:
+            return v
+        return v.replace("-", "")
+
+    @field_validator("to", mode="before")
+    @classmethod
+    def normalize_to_phone_number(
+        cls, v: Union[str, list[str]]
+    ) -> Union[str, list[str]]:
+        if isinstance(v, str):
+            return v.replace("-", "")
+        elif isinstance(v, list):
+            return [phone.replace("-", "") for phone in v]
+        return v
 
     model_config = ConfigDict(
         extra="ignore",
