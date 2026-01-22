@@ -37,3 +37,6 @@ debug
 
 # ruff
 .ruff_cache/
+
+# omc
+.omc/

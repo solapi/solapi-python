@@ -81,4 +81,5 @@ class Message(BaseModel):
         extra="ignore",
         populate_by_name=True,
         alias_generator=to_camel,
+        use_enum_values=True,
     )
