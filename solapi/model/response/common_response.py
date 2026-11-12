@@ -87,7 +87,7 @@ class GroupMessageResponse(BaseModel):
     log: list[dict[str, Any]]
     status: str
     allow_duplicates: bool
-    is_refunded: bool
+    is_refunded: bool = False
     account_id: str
     master_account_id: Optional[str]
     api_version: str
