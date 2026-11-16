@@ -83,7 +83,7 @@ model/
 ### VERSION SYNC REQUIRED
 ```python
 # solapi/model/request/__init__.py
-VERSION = "python/5.0.3"  # MUST update on every release!
+VERSION = "python/5.1.0"  # MUST update on every release!
 ```
 Also update `pyproject.toml` version.
 
