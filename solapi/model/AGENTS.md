@@ -90,7 +90,7 @@ image_id: Optional[str] = Field(default=None, alias="imageId")
 ### VERSION IN THIS PACKAGE
 ```python
 # request/__init__.py line 1-2
-VERSION = "python/5.0.3"  # Sync with pyproject.toml!
+VERSION = "python/5.1.0"  # Sync with pyproject.toml!
 ```
 
 ## KEY CLASSES
