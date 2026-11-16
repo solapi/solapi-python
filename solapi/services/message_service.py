@@ -109,7 +109,7 @@ class SolapiMessageService:
             self.auth_info,
             request={
                 "method": RequestMethod.POST,
-                "url": f"{self.base_url}/messages/v4/send-many/detail",
+                "url": f"{self.base_url}/messages/v4/send-many/fast",
             },
             data=request.model_dump(exclude_none=True, by_alias=True),
         )
@@ -232,7 +232,7 @@ class SolapiMessageService:
         response = default_fetcher(
             self.auth_info,
             request={
-                "url": f"{self.base_url}/messages/v4/groups/{group_id}",
+                "url": f"{self.base_url}/messages/v4/groups/fast/{group_id}",
                 "method": RequestMethod.GET,
             },
         )
@@ -254,7 +254,7 @@ class SolapiMessageService:
         response = default_fetcher(
             self.auth_info,
             request={
-                "url": f"{self.base_url}/messages/v4/groups/{group_id}/messages",
+                "url": f"{self.base_url}/messages/v4/groups/fast/{group_id}/messages",
                 "method": RequestMethod.GET,
             },
         )
